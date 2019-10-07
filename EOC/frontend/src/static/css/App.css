@@ -1,0 +1,13 @@
+.App {
+    margin-top: 15px;
+    margin-left: 20px;
+  }
+  
+  .App .navbar-brand {
+    font-weight: bold;
+  }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+}
