@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ForgotPassword from "./components/forgotPassword"
 import IncidentLists from "./components/incident-list.component"
+import openIncident from "./components/openIncident";
 
 export default () =>
 <BrowserRouter>
@@ -14,5 +15,6 @@ export default () =>
     <Route path="/signup" exact component={Signup} />
     <Route path="/forgotPassword" exact component={ForgotPassword} />
     <Route path="/incidentsList" exact component={IncidentLists} />
+    <Route path="/openIncident" exact component={openIncident} />
   </Switch>
   </BrowserRouter>;
