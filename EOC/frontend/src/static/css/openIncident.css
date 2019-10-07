@@ -1,0 +1,30 @@
+label {
+    font-size: 1em;
+    margin-bottom: 0.25em; 
+    font-family: fantasy;   
+}
+.timeofIncident{
+    display: flex;
+}
+.openIncident{
+    padding-top: 8%;
+    padding-left: 13%;
+}
+.location{
+    display: flex;
+}
+p{
+    margin-right:16% ;
+    text-indent: 0.5em
+}
+.btn-primary
+{
+    color: bisque;
+    background-color: #721c24;
+    border-color: brown;
+}
+.buttons
+{
+    margin: 10%;
+    margin-left: 27em;
+}

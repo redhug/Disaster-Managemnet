@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
+import "../static/css/openIncident.css"
 
 export default class openIncident extends Component
 {
@@ -15,20 +16,20 @@ export default class openIncident extends Component
     render()
     {
         return(
-            <div>
-                <div>
-                    <label name="timeofIncident">Time of Incident: </label>
+            <div className="openIncident">
+                <div className="timeofIncident">
+                    <label name="timeofIncident">Time of Incident:</label>
                     <p>{this.state.timeofIncident}</p>
                 </div>
-                <div>
-                    <label name="location">Location: </label>
+                <div className="location">
+                    <label name="location">Location:</label>
                     <p>{this.state.location}</p>
                 </div> 
-                <div>
-                    <label name="Description:">Location: </label>
+                <div className="Description">
+                    <label name="Description:">Description:</label>
                     <p>{this.state.Description}</p>
                 </div> 
-                <div>
+                <div className="buttons">
                 <Button type="submit" name="Close">
                     Close
                 </Button>
