@@ -11,8 +11,8 @@ export default class NavBarLogin extends Component {
                 <Link to="/" className="navbar-brand">Emergency Operation Center</Link>
                 <Navbar.Collapse>
                     <Nav className="ml-auto">
-                        <Link className="nav-link" to="/signup">Signup</Link>
                         <Link className="nav-link" to="/login">Login</Link>
+                        <Link className="nav-link" to="/signup">Signup</Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

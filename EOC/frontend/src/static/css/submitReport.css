@@ -1,0 +1,20 @@
+.Description
+{
+    width: 84%;
+    padding-bottom: 5%;
+    display: block;
+}
+table,th,td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+.submitReport
+{
+    padding: 5%;
+}
+.ReportTitle
+{
+    margin-right:1%;
+}
+

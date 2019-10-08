@@ -7,8 +7,8 @@ export default class Home extends Component {
       <div >
         <NavBarLogin />
         <div >
-          <h1>Scratch</h1>
-          <p>A simple note taking app</p>
+          <h1>Emergency Operation Center</h1>
+          <p>Welcome to emergency operation center</p>
         </div>
       </div>
     );

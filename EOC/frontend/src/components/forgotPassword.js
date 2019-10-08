@@ -64,7 +64,6 @@ export default class ResetPassword extends Component {
 
                     <Button
                         block
-                        bsSize="large"
                         disabled={!this.validateForm()}
                         type="submit"
                     >
