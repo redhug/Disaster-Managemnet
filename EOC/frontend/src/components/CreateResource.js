@@ -39,8 +39,9 @@ onSubmit = e =>{
   render() {
     return (
      <div><NavbarApp />
+     
 <h1 align="center">Create Resource</h1>
-      <form>
+      <form align="center">
       <div className="inputBox width70">
           <label>Type Of Resource :  
                 <select>
