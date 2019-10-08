@@ -17,7 +17,8 @@ export default class Signup extends Component {
       confirmpassword: "",
       contactno: "",
       certificationsCheck: "",
-      certifications: ""
+      certifications: "",
+      legalBadge: "",
     };
     this.handleValueChange = this.handleValueChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -34,8 +35,9 @@ export default class Signup extends Component {
   }
 
   handleChange(event) {
+    console.log(event.target.name)
     this.setState({
-      certificationsCheck: event.target.value
+      [event.target.name]: event.target.value
     });
   }
   renderCertifications() {
@@ -82,7 +84,7 @@ export default class Signup extends Component {
                 onChange={this.handleValueChange}
               />
             </div>
-            <div className="inputBox email">
+            <div className="inputBox width70">
               <label htmlFor="email">Email</label>
               <input
                 type="text"
@@ -93,7 +95,7 @@ export default class Signup extends Component {
               />
             </div>
 
-            <div className="inputBox contactno">
+            <div className="inputBox width70">
               <label htmlFor="contactno">Contact number</label>
               <input
                 type="number"
@@ -129,14 +131,13 @@ export default class Signup extends Component {
             <div>
               <label htmlFor="certificationCheck">
                 Do you have any certifications in Medical field</label>
-              <div  classname="inputBox">
-                <input type="radio" name="certificationCheck"
+              <div className="mb10">
+                <input type="radio" name="certificationsCheck"
                   checked={this.state.certificationsCheck === "true"}
-                  onChange={this.handleChange}
-                 
-                  value="true"
+                  onChange={this.handleChange}                 
+                  value="true"  
                 />Yes
-                <input type="radio" name="certificationCheck"
+                <input type="radio" name="certificationsCheck"
                   onChange={this.handleChange}
                   value="false"
                   checked={this.state.certificationsCheck === "false"}
@@ -145,9 +146,27 @@ export default class Signup extends Component {
               </div>
             </div>
             {this.renderCertifications()}
+            <div>
+              <label htmlFor="legalBadge">
+                Do you have any legal badge</label>
+              <div className="mb10">
+                <input type="radio" name="legalBadge"
+                  checked={this.state.legalBadge === "true"}
+                  onChange={this.handleChange}
+                  
+                  value="true"
+                />Yes
+                <input type="radio" name="legalBadge"
+                  onChange={this.handleChange}
+                  value="false"
+                  checked={this.state.legalBadge === "false"}
+                  className="ml2"
+                />No
+              </div>
+            </div>
             <div className="createAccount mt20">
               <Button 
-                bssize="large">Create Account</Button>
+                bssize="large" type="submit">Create Account</Button>
               <Link to="/login" variant="body2">
                       Already have an account?
               </Link>
