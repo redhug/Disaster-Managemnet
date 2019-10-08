@@ -7,6 +7,7 @@ import ForgotPassword from "./components/forgotPassword"
 import IncidentLists from "./components/incident-list.component"
 import openIncident from "./components/openIncident";
 import submitReport from "./components/submitReport";
+import CreateIncident from "./components/createIncident";
 export default () =>
 <BrowserRouter>
   <Switch>
@@ -17,5 +18,6 @@ export default () =>
     <Route path="/incidentsList" exact component={IncidentLists} />
     <Route path="/openIncident" exact component={openIncident} />
     <Route path="/submitReport" exact component={submitReport} />
+    <Route path="/createIncident" exact component={CreateIncident} />
   </Switch>
   </BrowserRouter>;
