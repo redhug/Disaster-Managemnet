@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import "../static/css/CreateResource.css";
+import NavbarApp from "./navbar.component"
 
 export default class Form extends React.Component {
   state = {
@@ -35,10 +36,12 @@ onSubmit = e =>{
     console.log(this.state);
 };
 
-
   render() {
     return (
+     <div><NavbarApp />
+<h1 align="center">Create Resource</h1>
       <form>
+      <div className="inputBox width70">
           <label>Type Of Resource :  
                 <select>
                      <option value='0'>EMS</option>
@@ -48,7 +51,9 @@ onSubmit = e =>{
                      <option value='3'>Person</option>
                     </select>
         </label>
+        </div> 
         <br/>
+        <div className="inputBox width70">
         <label>
             Resource Name : 
         <select>
@@ -58,7 +63,9 @@ onSubmit = e =>{
                      <option value='2'>Field aid station</option>
                     </select>
         </label>
+        </div>
         <br />
+        <div className="inputBox width70">
         <label>
             Location :  
         <input
@@ -68,7 +75,9 @@ onSubmit = e =>{
           onChange={e => this.change(e)}
         />
         </label>
+        </div> 
         <br />
+        <div className="inputBox width70">
         <label> Address : 
         <input
           name="address"
@@ -84,7 +93,9 @@ onSubmit = e =>{
         />
         <br />
         </label>
+        </div> 
         <br />
+        <div className="inputBox width70">
         <label>
           County :
           <input 
@@ -94,7 +105,9 @@ onSubmit = e =>{
           onChange={e => this.change(e)}
         />
         </label>
+        </div> 
         <br />
+        <div className="inputBox width70">
         <label>
           Zip :
           <input 
@@ -104,7 +117,9 @@ onSubmit = e =>{
           onChange={e => this.change(e)}
         />
         </label>
+        </div> 
         <br />
+        <div className="inputBox width70">
         <label>
           State :
           <input 
@@ -114,9 +129,11 @@ onSubmit = e =>{
           onChange={e => this.change(e)}
         />
         </label>
+        </div> 
         <br />
         <Button onClick={e => this.onSubmit(e)}>Create</Button>
       </form>
+      </div> 
     );
   }
 }
