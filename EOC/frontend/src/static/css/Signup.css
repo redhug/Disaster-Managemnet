@@ -67,7 +67,15 @@ input {
     width: 100%;
 }
 
-
+.datetime-picker .calendar table, th, td{
+        border: none !important;
+}
+.datetime-picker .calendar .calendar-nav button {
+    background: whitesmoke !important;
+}
+.datetime-picker .calendar table thead th {
+    color: #212c0c !important;
+}
 .createAccount {
     width: 100%;
     display: flex;
