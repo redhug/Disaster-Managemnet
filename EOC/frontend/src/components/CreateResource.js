@@ -40,14 +40,11 @@ onSubmit = e =>{
   render() {
     return (
     <div>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
-            crossorigin="anonymous">
-        </link>
       <NavbarApp />
-    <h1 align="center">Create Resource</h1>
-      <form >        
-      <div class="form-group">
+      <div className="signup form-wrapper">
+        <h2 align="center">Create Resource</h2>   
+      <form>        
+      <div class="inputBox width70">
         <label for="typeofresource">Type of Resource</label>
           <select class="form-control" id="typeofresource">
                       <option value='0'>EMS</option>
@@ -57,7 +54,7 @@ onSubmit = e =>{
                      <option value='3'>Person</option>
            </select>
       </div> 
-      <div class="form-group ml2">
+      <div class="inputBox width70">
         <label for="resourcename">Resource Name</label>
             <select class="form-control" id="resourcename">
                      <option value='0'>Ambulance</option>
@@ -142,6 +139,7 @@ onSubmit = e =>{
         </div>
       </form>
     </div> 
+    </div>
     );
   }
 }

@@ -3,15 +3,38 @@ import { Button, FormGroup, FormControl, FormLabel, Navbar } from "react-bootstr
 import { Link } from "react-router-dom";
 import "../static/css/Login.css";
 import NavBarLogin from "./navBarLogin"
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../actions/authActions";
+import classnames from "classnames";
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: "",
-      password: ""
+      password: "",      
+      errors: {}
     };
+  }
+  componentDidMount() {
+    // If logged in and user navigates to Login page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/incidentsList");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/incidentsList");
+    }
+
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
   validateForm() {
@@ -28,9 +51,15 @@ export default class Login extends Component {
     event.preventDefault();
     console.log(this.state.email);
     console.log(this.state.password);
+    const userData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.loginUser(userData);
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div>
          <NavBarLogin/>
@@ -44,7 +73,14 @@ export default class Login extends Component {
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
+              className={classnames("", {
+                invalid: errors.email || errors.emailnotfound
+              })}
             />
+             <span className="text-danger">
+                  {errors.email}
+                  {errors.emailnotfound}
+                </span>
           </FormGroup>
           <FormGroup controlId="password" bssize="large">
             <FormLabel>Password</FormLabel>
@@ -52,7 +88,14 @@ export default class Login extends Component {
               value={this.state.password}
               onChange={this.handleChange}
               type="password"
+              className={classnames("", {
+                invalid: errors.password || errors.passwordincorrect
+              })}
             />
+            <span className="text-danger">
+                  {errors.password}
+                  {errors.passwordincorrect}
+                </span>
           </FormGroup>
           <Button
             block
@@ -71,3 +114,16 @@ export default class Login extends Component {
     );
   }
 }
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);

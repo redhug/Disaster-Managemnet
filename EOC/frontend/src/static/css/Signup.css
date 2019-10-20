@@ -22,6 +22,10 @@ h2 {
     color: #111;
 }
 
+.text-center{
+    text-align: center;
+}
+
 .mb10{
     margin-bottom: 10px;
 }
@@ -30,7 +34,7 @@ label {
     margin-bottom: 0.25em;    
 }
 
-input {
+input, textarea, select {
     padding: 10px 10px;
     border-radius: 5px;
     outline: none;
@@ -76,6 +80,13 @@ input {
 .datetime-picker .calendar table thead th {
     color: #212c0c !important;
 }
+.datetime-picker .time .sliders .slider {
+    background-image: linear-gradient(to right, #464141, #464141) !important;
+}
+.datetime-picker .time .sliders .slider .handle {
+    border: 1px solid #464141 !important;
+}
+
 .createAccount {
     width: 100%;
     display: flex;
@@ -103,7 +114,7 @@ aside{
 
 .alert-secondary {
     color: #383d41;
-    background-color: #6c757d;
+    background-color: #7f8182;
     border-color: #d6d8db;
     padding: 1%;
     border-radius: 10px;

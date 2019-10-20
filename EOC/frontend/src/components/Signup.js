@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import "../static/css/Signup.css";
 import NavBarLogin from "./navBarLogin"
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../actions/authActions";
+import classnames from "classnames";
 
-export default class Signup extends Component {
+class Signup extends Component {
 
   constructor() {
     super();
@@ -19,10 +23,25 @@ export default class Signup extends Component {
       certificationsCheck: "",
       certifications: "",
       legalBadge: "",
+      errors: {}
     };
     this.handleValueChange = this.handleValueChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount() {
+    // If logged in and user navigates to Register page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/incidentsList");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
   handleValueChange(e) {
@@ -53,11 +72,21 @@ export default class Signup extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log("The form was submitted!!");
-    console.log(this.state);
+    const newUser = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.confirmpassword,
+      contactNo: this.state.contactno,
+      medicalCertification: this.state.certifications,
+      enforcementOfficer: this.state.legalBadge
+    };
+    this.props.registerUser(newUser, this.props.history);
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div>
         <NavBarLogin />
@@ -72,7 +101,11 @@ export default class Signup extends Component {
                 name="firstName"
                 value={this.state.firstName}
                 onChange={this.handleValueChange}
+                className={classnames("", {
+                  invalid: errors.firstName
+                })}
               />
+              <span className="text-danger">{errors.firstName}</span>
             </div>
             <div className="inputBox width50 ml2">
               <label htmlFor="lastName">Last Name</label>
@@ -82,7 +115,11 @@ export default class Signup extends Component {
                 name="lastName"
                 value={this.state.lastName}
                 onChange={this.handleValueChange}
+                className={classnames("", {
+                  invalid: errors.lastName
+                })}
               />
+              <span className="text-danger">{errors.lastName}</span>
             </div>
             <div className="inputBox width70">
               <label htmlFor="email">Email</label>
@@ -92,7 +129,11 @@ export default class Signup extends Component {
                 name="email"
                 value={this.state.email}
                 onChange={this.handleValueChange}
+                className={classnames("", {
+                  invalid: errors.email
+                })}
               />
+              <span className="text-danger">{errors.email}</span>
             </div>
 
             <div className="inputBox width70">
@@ -104,7 +145,11 @@ export default class Signup extends Component {
                 name="contactno"
                 value={this.state.contactno}
                 onChange={this.handleValueChange}
+                className={classnames("contactnoInput", {
+                  invalid: errors.contactNo
+                })}
               />
+              <span className="text-danger">{errors.contactNo}</span>
             </div>
             <div className="inputBox width50">
               <label htmlFor="password">Password</label>
@@ -115,7 +160,11 @@ export default class Signup extends Component {
                 name="password"
                 value={this.state.password}
                 onChange={this.handleValueChange}
+                className={classnames("", {
+                  invalid: errors.password
+                })}
               />
+              <span className="text-danger">{errors.password}</span>
             </div>
             <div className="inputBox width50 ml2">
               <label htmlFor="password">Confirm Password</label>
@@ -126,7 +175,11 @@ export default class Signup extends Component {
                 name="confirmpassword"
                 value={this.state.confirmpassword}
                 onChange={this.handleValueChange}
+                className={classnames("", {
+                  invalid: errors.password2
+                })}
               />
+              <span className="text-danger">{errors.password2}</span>
             </div>
             <div>
               <label htmlFor="certificationCheck">
@@ -148,13 +201,16 @@ export default class Signup extends Component {
             {this.renderCertifications()}
             <div>
               <label htmlFor="legalBadge">
-                Do you have any legal badge</label>
+                Are you a sworn law enforcement officer ?</label>
               <div className="mb10">
                 <input type="radio" name="legalBadge"
                   checked={this.state.legalBadge === "true"}
                   onChange={this.handleChange}
                   
                   value="true"
+                  className={classnames("", {
+                    invalid: errors.enforcementOfficer
+                  })}
                 />Yes
                 <input type="radio" name="legalBadge"
                   onChange={this.handleChange}
@@ -162,7 +218,11 @@ export default class Signup extends Component {
                   checked={this.state.legalBadge === "false"}
                   className="ml2"
                 />No
+                <div>
+                 <span className="text-danger">{errors.enforcementOfficer}</span>
+                 </div>
               </div>
+             
             </div>
             <div className="createAccount mt20">
               <Button 
@@ -178,3 +238,18 @@ export default class Signup extends Component {
   }
 }
 
+Signup.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Signup));

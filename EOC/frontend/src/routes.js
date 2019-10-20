@@ -7,19 +7,18 @@ import ForgotPassword from "./components/forgotPassword"
 import IncidentLists from "./components/incident-list.component"
 import openIncident from "./components/openIncident";
 import CreateResource from "./components/CreateResource";
-import submitReport from "./components/submitReport";
+import CreateReport from "./components/createReport";
 import CreateIncident from "./components/createIncident";
+import ViewReports from "./components/viewReports";
+import PrivateRoute from "./private-route/PrivateRoute";
 export default () =>
-<BrowserRouter>
+
   <Switch>
-    <Route path="/" exact component={Home} />
-    <Route path="/login" exact component={Login} />
-    <Route path="/signup" exact component={Signup} />
-    <Route path="/forgotPassword" exact component={ForgotPassword} />
-    <Route path="/incidentsList" exact component={IncidentLists} />
-    <Route path="/openIncident" exact component={openIncident} />
-    <Route path="/CreateResource" exact component={CreateResource} />
-    <Route path="/submitReport" exact component={submitReport} />
-    <Route path="/createIncident" exact component={CreateIncident} />
-  </Switch>
-  </BrowserRouter>;
+    <PrivateRoute exact path="/incidentsList" component={IncidentLists} />
+    <PrivateRoute path="/incidentsList" exact component={IncidentLists} />
+    <PrivateRoute path="/openIncident" exact component={openIncident} />
+    <PrivateRoute path="/CreateResource" exact component={CreateResource} />
+    <PrivateRoute path="/createReport" exact component={CreateReport} />
+    <PrivateRoute path="/createIncident" exact component={CreateIncident} />
+    <PrivateRoute path="/viewReports" exact component={ViewReports} />
+  </Switch>;
