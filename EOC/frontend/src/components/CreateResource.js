@@ -85,6 +85,9 @@ onSubmit = e =>{
                value={this.state.description} 
                onChange={e => this.change(e)}
         />
+        </div>
+        <div class="form-group col-md-6">
+        <label for="address">Address 2</label>
           <input type="text"
                  class="form-control"
                  name="address"
@@ -93,7 +96,7 @@ onSubmit = e =>{
                  onChange={e => this.change(e)}
         />
       </div>
-      <div class="form-group col-md-6">
+      <div class="form-group ">
         <label for="city">City</label>
           <input type="text"
                  class="form-control"
@@ -103,7 +106,7 @@ onSubmit = e =>{
                  onChange={e => this.change(e)}
           />
       </div> 
-      <div class="form-group">
+      <div class="form-group col-md-6">
         <label for="county">County</label>
           <input type="text"
                  class="form-control"
@@ -113,7 +116,7 @@ onSubmit = e =>{
                  onChange={e => this.change(e)}
           />
       </div>
-        <div class="form-group col-md-6">
+        <div class="form-group ">
           <label for="zip">Zip code</label>
             <input type ="text"
                    class="form-control"
@@ -123,7 +126,7 @@ onSubmit = e =>{
                    onChange={e => this.change(e)}
             />
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-6">
           <label for="state">State</label>
           <input type="text" 
                  class="form-control" 
