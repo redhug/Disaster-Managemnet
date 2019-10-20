@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 router.use(bodyParser.json());
 
-router.post('/signup', authController.signUp);
+router.post('/register', authController.signUp);
 router.post('/login', authController.login);
 //router.post('/forgotPassword', authController.forgotPassword)
 //router.post('/resetPassword', authController.resetPassword)
