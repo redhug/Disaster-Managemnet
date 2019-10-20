@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import "../static/css/CreateResource.css";
 import NavbarApp from "./navbar.component"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class Form extends React.Component {
   state = {
@@ -38,103 +39,106 @@ onSubmit = e =>{
 
   render() {
     return (
-     <div><NavbarApp />
-     
-<h1 align="center">Create Resource</h1>
-      <form align="center">
-      <div className="inputBox width70">
-          <label>Type Of Resource :  
-                <select>
-                     <option value='0'>EMS</option>
+    <div>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+            crossorigin="anonymous">
+        </link>
+      <NavbarApp />
+    <h1 align="center">Create Resource</h1>
+      <form >        
+      <div class="form-group">
+        <label for="typeofresource">Type of Resource</label>
+          <select class="form-control" id="typeofresource">
+                      <option value='0'>EMS</option>
                      <option value='0'>Fire</option>
                      <option value='1'>Hazmat</option> 
                      <option value='2'>Utilities</option>
                      <option value='3'>Person</option>
-                    </select>
-        </label>
-        </div> 
-        <br/>
-        <div className="inputBox width70">
-        <label>
-            Resource Name : 
-        <select>
+           </select>
+      </div> 
+      <div class="form-group ml2">
+        <label for="resourcename">Resource Name</label>
+            <select class="form-control" id="resourcename">
                      <option value='0'>Ambulance</option>
                      <option value='0'>Air Ambulance</option>
                      <option value='1'>Resouce Tank</option> 
                      <option value='2'>Field aid station</option>
-                    </select>
-        </label>
-        </div>
-        <br />
-        <div className="inputBox width70">
-        <label>
-            Location :  
-        <input
-          name="location"
-          placeholder="Location"
-          value={this.state.location}
-          onChange={e => this.change(e)}
+            </select>
+      </div>
+        <div class="form-group width70 ">
+          <label for="location">Location</label>
+          <input type="text"
+                class="form-control"
+                 name="location"
+                 placeholder="Location"
+                 value={this.state.location}
+                 onChange={e => this.change(e)}
+            />
+          </div> 
+        <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text"
+               class="form-control"
+               name="address"
+               placeholder="Address Line 1"
+               value={this.state.description} 
+               onChange={e => this.change(e)}
         />
-        </label>
-        </div> 
-        <br />
-        <div className="inputBox width70">
-        <label> Address : 
-        <input
-          name="address"
-          placeholder="Address Line 1"
-          value={this.state.description} 
-          onChange={e => this.change(e)}
+          <input type="text"
+                 class="form-control"
+                 name="address"
+                 placeholder="Address Line 2"
+                 value={this.state.description} 
+                 onChange={e => this.change(e)}
         />
-          <input
-          name="address"
-          placeholder="Address Line 2"
-          value={this.state.description} 
-          onChange={e => this.change(e)}
-        />
-        <br />
-        </label>
-        </div> 
-        <br />
-        <div className="inputBox width70">
-        <label>
-          County :
-          <input 
-          name ="county"
-          placeholder="Enter County name"
-          value={this.state.description} 
-          onChange={e => this.change(e)}
-        />
-        </label>
-        </div> 
-        <br />
-        <div className="inputBox width70">
-        <label>
-          Zip :
-          <input 
-          name ="zip"
-          placeholder="Enter Zip code"
-          value={this.state.description} 
-          onChange={e => this.change(e)}
-        />
-        </label>
-        </div> 
-        <br />
-        <div className="inputBox width70">
-        <label>
-          State :
-          <input 
-          name ="state"
-          placeholder="Enter state"
-          value={this.state.description} 
-          onChange={e => this.change(e)}
-        />
-        </label>
-        </div> 
-        <br />
-        <Button onClick={e => this.onSubmit(e)}>Create</Button>
-      </form>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="city">City</label>
+          <input type="text"
+                 class="form-control"
+                 name="City"
+                 placeholder="City"
+                 value={this.state.location}
+                 onChange={e => this.change(e)}
+          />
       </div> 
+      <div class="form-group">
+        <label for="county">County</label>
+          <input type="text"
+                 class="form-control"
+                 name ="county"
+                 placeholder="County"
+                 value={this.state.description} 
+                 onChange={e => this.change(e)}
+          />
+      </div>
+        <div class="form-group col-md-6">
+          <label for="zip">Zip code</label>
+            <input type ="text"
+                   class="form-control"
+                   name="Zip"
+                   placeholder="Zip"
+                   value={this.state.description} 
+                   onChange={e => this.change(e)}
+            />
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" 
+                 class="form-control" 
+                 name="State" 
+                 placeholder="State"
+                 value={this.state.description} 
+                 onChange={e => this.change(e)}
+          />
+          <div className="create mt20">
+              <Button 
+                bssize="large" type="submit">Create Resource</Button>
+          </div>
+        </div>
+      </form>
+    </div> 
     );
   }
 }
