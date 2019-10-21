@@ -6,7 +6,8 @@ import Routes from "./routes";
 import "./static/css/App.css";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import ForgotPassword from "./components/forgotPassword"
+import ForgotPassword from "./components/forgotPassword";
+import ResetPassword from './components/resetPassword';
 import Home from "./components/Home";
 import PrivateRoute from "./private-route/PrivateRoute";
 import IncidentLists from "./components/incident-list.component"
@@ -45,6 +46,7 @@ class App extends Component {
         <Route path="/" exact component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
+        <Route path="/resetPassword/:token" component={ResetPassword} />
         <Route path="/forgotPassword" component={ForgotPassword} />
         <Routes/>
     </Router>  

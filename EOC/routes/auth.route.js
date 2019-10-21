@@ -7,8 +7,8 @@ router.use(bodyParser.json());
 
 router.post('/register', authController.signUp);
 router.post('/login', authController.login);
-//router.post('/forgotPassword', authController.forgotPassword)
-//router.post('/resetPassword', authController.resetPassword)
+router.post('/forgotPassword', authController.forgotPassword)
+router.post('/resetPassword', authController.resetPassword)
 
 module.exports = router;
 

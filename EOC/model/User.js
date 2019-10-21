@@ -32,6 +32,14 @@ const UserSchema = new Schema({
   enforcementOfficer: {
     type: String,
     required: true
+  },
+  resetPasswordToken:{
+    type: String, 
+    default: null
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null
   }
-});
+  });
 module.exports = User = mongoose.model("users", UserSchema);
