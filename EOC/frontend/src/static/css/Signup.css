@@ -15,6 +15,10 @@
     margin: 0 auto;
     max-width: 500px;
 }
+.center-align{
+    align-items: center;
+    justify-content: center;
+}
 
 h2 {
     text-align: center;
@@ -64,7 +68,7 @@ input, textarea, select {
   margin: 0; 
 }
 .width70{
-    width: 70%;
+    width: 70% !important;
 }
 
 .width100{
@@ -122,4 +126,8 @@ aside{
 
 .color-white{
     color: #fcfcfc !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgb(248, 249, 245);
 }
