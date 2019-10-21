@@ -3,11 +3,28 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+var _ = require('lodash');
+var handlebars = require('handlebars');
+const fs = require('fs')
 
 // Load User model
 const User = require("../model/User");
 // Load input validation
 const validateRegisterInput = require("../validation/register");
+
+var readHTMLFile = function(path, callback) {
+    fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+        if (err) {
+            throw err;
+            callback(err);
+        }
+        else {
+            callback(null, html);
+        }
+    });
+};
 
 // @route POST api/users/register
 // @desc Register user
@@ -104,73 +121,67 @@ const forgotPassword = (req, res) => {
 
     const body = _.pick(req.body, ['email'])
     console.log(body)
-    UserModel.findOne({email_id: body.email.toLowerCase()}, (error, user)=>{
+    User.findOne({email: body.email.toLowerCase()}, (error, user)=>{
         if(error){
-            res.json({code: 400, message:'Some went wrong'});
+            return res.status(400).json({ email: "Email required" });
         }
 
         if(user){
-
             const token = crypto.randomBytes(20).toString('hex'); 
-            console.log(token); 
-            UserModel.updateOne({email_id: body.email},
+            User.updateOne({email: body.email},
                 {$set: { 
                         resetPasswordToken: token,
                         resetPasswordExpires: Date.now() + 360000
                         }
                 }, (error, updatedUser) =>{
                     if(error){
-                        res.json({code: 400, message:'Something went wrong'});
+                        return res.json({code: 400, message:'Something went wrong'});
                     }
                     readHTMLFile(__dirname + '/resetPassword.html', function(err, html) {
 
-                        console.log( __dirname+'/images/forget_password.png')
                         var template = handlebars.compile(html);
                         var replacements = {
-                            username: user.first_name + ' ' + user.last_name,
-                            image1: 'https://i.ibb.co/HF4ZQBF/codeword-favi.png',
-                            url:'https://codeword-group03.herokuapp.com/resetPassword/'+token,
+                            username: user.firstName + ' ' + user.lastName,
+                            url:'http://localhost:3000/resetPassword/'+token,
                             type: 'Reset Password',
                             message1: 'There was a request to change your password!',
                             message2: 'If did not make this request, just ignore this email. Otherwise, please click the button below to change your password:'
                        };
                     const transporter = nodemailer.createTransport({
-                        service: 'gmail', 
+                        service: 'Gmail', 
                         auth: {
-                                user: 'codeword.group03@gmail.com',
-                                pass: 'Aug@2019'
+                                user: 'byreddypavan.tr@gmail.com',
+                                pass: 'Lkjhg@07'
                              }
                     });
 
                 const mailoptions = {
-                    from: 'codeword.group03@gmail.com', 
+                    from: 'byreddypavan.tr@gmail.com', 
                     to: body.email, 
                     subject: "Link To Reset Password", 
                     text:'Hi, \n\n'+
                         'You are receiving this because you(or someone else) have requested the reset'+ 
                         'of the password for your account.\n\nPlease click on the following link,'+
                         'or paste this into your browser to complete the process within one hour of' +
-                        ' receiving it:\n\n' + 'https://codeword-group03.herokuapp.com/resetPassword/'+token+'\n\n' + 
+                        ' receiving it:\n\n' + 'http://localhost:3000/resetPassword/'+token+'\n\n' + 
                         'If you did not request this, please ignore this email and your password will remain unchanged.\n\n'+
-                        'Thank you!\n'+
-                        'Team codeword group03',
+                        'Thank you!\n',
                     html: template(replacements)
                 }
-            console.log('sending mail')
 
                     transporter.sendMail(mailoptions, function (err, response) {
                         if (err) {
-                            res.json({code: 400, message:err});
+                            return res.json({code: 400, message:err});
                         } else {
             
-                            res.json({code: 200, message:'Recovery email sent'});
+                            return res.json({code: 200, message:'Recovery email sent'});
                         }
                 })
             })
             })
 
         }else{
-        res.json({code: 404, message:'User is not registered'});
+            return res.json({code: 404, message:'User is not registered'});
         }
         
     })
@@ -178,3 +189,63 @@ const forgotPassword = (req, res) => {
 }
 
 module.exports.forgotPassword = forgotPassword
+
+const resetPassword = (req, res) =>{
+    let body = _.pick(req.body, ['resetToken', 'password'])
+    bcrypt.genSalt(10, (err,salt) => {
+        bcrypt.hash(body.password,salt,(err,hash) => {
+            
+            if(err){
+                return res.json({code: 400, message:'Something went wrong'})
+            }
+
+            User.findOne({resetPasswordToken: body.resetToken, 
+              resetPasswordExpires: {$gt: Date.now()}},
+             (error, user)=>{
+                if(error){
+                    return res.json({code: 400, message:'Something went wrong'})
+                }
+              
+                if(!user){
+                    return res.json({code: 404, message:'This link is not valid or has already expired.'})
+                }
+               
+               bcrypt.compare(body.password, user.password, (err, match)=>{
+                
+                console.log(match)
+                if(!match){
+                    User.findOneAndUpdate({
+                        resetPasswordToken: body.resetToken,
+                        resetPasswordExpires: {$gt: Date.now()}
+                    }, 
+                    {
+                        $set:{
+                            resetPasswordToken: null,
+                            resetPasswordExpires:null,
+                            password: hash
+                        }
+                    },
+                     (error, user)=>{
+                    if(error){
+                        return res.json({code: 400, message:'Something went wrong'})
+                    }
+                    if(user){
+                        return res.json({code: 200, message:'Password Reset successfully. You can now login.'})
+                    }else{
+                        return res.json({code: 404, message:'This link is not valid or has already expired.'})
+                    }
+                })
+                }else{
+                    return res.json({code: 404, message:'Cannot use previous passwords'})
+                }
+
+               })              
+
+            })       
+
+        })
+    })
+   
+}
+
+module.exports.resetPassword = resetPassword
