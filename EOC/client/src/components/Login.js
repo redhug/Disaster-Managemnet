@@ -7,15 +7,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 import classnames from "classnames";
+import FlashMessage from 'react-flash-message'
 
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
       password: "",      
-      errors: {}
+      errors: {},
+      renderMsg:false
     };
   }
   componentDidMount() {
@@ -23,6 +24,12 @@ class Login extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/incidentsList");
     }
+    if(this.props.location) {
+      if(this.props.location.data){
+        this.setState({renderMsg:this.props.location.data});
+      }
+    }
+    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,7 +47,15 @@ class Login extends Component {
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
-
+  renderMessage() {
+    if (this.state.renderMsg) {
+      return (
+        <FlashMessage duration={5000}>
+                            <span class="bg-success text-white">Reset link has been sent to your mail</span>
+                        </FlashMessage>
+      );
+    }
+  }
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -66,6 +81,7 @@ class Login extends Component {
       <div className="Login">
         <h3 className="text-center">Login</h3>
         <form onSubmit={this.handleSubmit}>
+        {this.renderMessage()}
           <FormGroup controlId="email" bsssize="large">
             <FormLabel>Email</FormLabel>
             <FormControl

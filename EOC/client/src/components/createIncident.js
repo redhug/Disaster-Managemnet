@@ -89,10 +89,10 @@ export default class CreateIncident extends Component {
                             />
                         </div>
                         <div className="inputBox width70">
-                            <label htmlFor="location">Location</label>
+                            <label htmlFor="location">Address/Co-ordinates</label>
                             <input
                                 type="text"
-                                placeholder="Location"
+                                placeholder="Address/Co-ordinates"
                                 name="location"
                                 value={this.state.location}
                                 onChange={this.handleChange}
