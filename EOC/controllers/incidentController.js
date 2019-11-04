@@ -1,40 +1,60 @@
-// const express = require("express");
-// const router = express.Router();
-// // Load User model
-// const Incidents = require("../model/Incidents");
+const express = require("express");
+const router = express.Router();
+// Load User model
+const Incidents = require("../model/Incidents");
 
+const getIncidents = (req, res) => {
+    Incidents.find({ status: req.query.status })
+      .then(incidents => res.json(incidents))
+      .catch(err => res.status(400).json('Error: ' + err));
+};
+module.exports.getIncidents = getIncidents
 
-// var counter = function (name) {
-//     var ret = db.counters.findAndModify({ query: { _id: name }, update: { $inc: { next: 1 } }, "new": true, upsert: true });
-//     // ret == { “_id” : “users”, “next” : 1 }
-//     return ret.next;
-// };
+const createIncident = (req, res) => {
+    Incidents.findOne({ incidentName: req.body.incidentName }).then(incident => {
+        if (incident) {
+            return res.status(400).json({ email: "Incident already exists" });
+        } else {
+            const newIncident = new Incidents({
+                // incidentId: Incidents.nextCount(function(err,count){
+                //     return count;
+                // }),
+                incidentName: req.body.incidentName,
+                address: req.body.address,
+                dateAndTime: req.body.dateAndTime,
+                description: req.body.description,
+                status: "open"
+            });
+            newIncident
+                .save()
+                .then(user => res.json(user))
+                .catch(err => console.log(err));
+        }
+    });
+};
 
+module.exports.createIncident = createIncident
 
+const closeIncident = (req, res) => {
+    console.log(req.body.params)
+    Incidents.findOneAndUpdate({
+        incidentId:req.body.params.incidentId
+    }, 
+    {
+        $set:{
+           status:'closed'
+        }
+    },
+     (error, incident)=>{
+    if(error){
+        return res.json({code: 400, message:'Something went wrong'})
+    }
+    if(incident){
+        return res.json({code: 200, message:'Incident closed.'})
+    }else{
+        return res.json({code: 404, message:'Something went wrong.'})
+    }})
+    .catch(err => res.status(400).json('Error: ' + err));
+};
 
-// const createIncident = (req, res) => {
-//     Incidents.findOne({ incidentName: req.body.incidentName }).then(incident => {
-//         if (incident) {
-//             return res.status(400).json({ email: "Incident already exists" });
-//         } else {
-//             Incidents.insert({_id:counter(Incidents), incidentName:req.body.incidentName,
-//                 address:req.body.address,dateAndTime:req.body.dateAndTime,description:req.body.description }) 
-//             // const newIncident = new Incidents({
-//             //     firstName: req.body.firstName,
-//             //     lastName: req.body.lastName,
-//             //     email: req.body.email,
-//             //     password: req.body.password,
-//             //     contactNo: req.body.contactNo,
-//             //     medicalCertification: req.body.medicalCertification,
-//             //     enforcementOfficer: req.body.enforcementOfficer
-//             // });
-
-//             // newIncident
-//             //     .save()
-//             //     .then(user => res.json(user))
-//             //     .catch(err => console.log(err));
-//         }
-//     });
-// };
-
-// module.exports.createIncident = createIncident
+module.exports.closeIncident = closeIncident
