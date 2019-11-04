@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import "../static/css/CreateResource.css";
 import NavbarApp from "./navbar.component"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
