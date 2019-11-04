@@ -17,6 +17,8 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css'
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -42,6 +44,7 @@ class App extends Component {
   return (
     <Provider store={store}>
     <div>
+    <ReactNotification />
     <Router >
         <Route path="/" exact component={Home} />
         <Route exact path="/login" component={Login} />

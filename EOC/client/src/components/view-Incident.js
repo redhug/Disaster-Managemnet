@@ -1,20 +1,50 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import NavbarApp from "./navbar.component";
+import moment from "moment";
 import { Link } from "react-router-dom";
 
-export default class openIncident extends Component {
+export default class viewIncident extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            incident: props.location.data,
+            incidentName: "",
             //incident: this.props.data,
-            timeofIncident: "10-21-2019 13:30",
+            timeofIncident: "",
             btnName:"update",
-            location: "West Fertilizer Co.,1471 Jerry Mashek Drive,West, Texas, U.S",
-            description: "On April 17th, 2013, the West Fertilizer Company, a plant housing anhydrous ammonia gas and an unreported stockpile of ammonium nitrate blew up, killing 15 people (including 12 first-responders who had never been trained to fight fires at a plant full of chemicals used in fertilizer production) and injuring hundreds of residents. The blast destroyed dozens of homes and a middle school. Registering as a magnitude 2.1 earthquake on U.S. Geological Survey seismographs, the explosion was likened by West's mayor to the detonation of a nuclear bomb. "
+            location: "",
+            description: "",
+            incidentId: 0,
+            status:""
         };
         this.routeChange = this.routeChange.bind(this);
+    }
+    componentDidMount() {
+       console.log(this.props.location.state.status)
+        if (this.props.location) {
+            if (this.props.location.state) {
+                if (this.props.location.state.incidentName) {
+                    this.setState({ incidentName: this.props.location.state.incidentName });
+                }
+                if (this.props.location.state.incidentId) {
+                    this.setState({ incidentId: this.props.location.state.incidentId });
+                }
+                if (this.props.location.state.address) {
+                    this.setState({ location: this.props.location.state.address });
+                }
+                if (this.props.location.state.dateAndTime) {                    
+                    console.log(this.props.location.state.dateAndTime)
+                    var date = moment(this.props.location.state.dateAndTime);
+                    this.setState({ timeofIncident: date.format("MM-DD-YYYY HH:mm") });
+                }
+                if (this.props.location.state.description) {
+                    this.setState({ description: this.props.location.state.description });
+                }
+                if(this.props.location.state.status){
+                    this.setState({ status: this.props.location.state.status });
+                }
+            }
+        }
     }
     routeChange(){
         this.props.history.push(
@@ -25,11 +55,11 @@ export default class openIncident extends Component {
     
     renderIncidents() {
         //console.log()
-        if (this.state.incident) {
+        if (this.state.incidentName) {
           return (
             <div className="container mt20">
                 <div className="timeofIncident">
-                    <h2>{this.state.incident.name}</h2>
+                    <h2>{this.state.incidentName}</h2>
                     <h5>Time of Incident:</h5>
                     <span >{this.state.timeofIncident}</span>
                 </div>
@@ -42,6 +72,8 @@ export default class openIncident extends Component {
                     <p>{this.state.description}</p>
                 </div>
                 <div className="text-center">
+                   {(this.state.status != 'closed') ?
+                   <span className="pull-left">
                     <Button name="edit" onClick={()=>this.props.history.push(
                                                 {pathname: '/createIncident',
                                                 state:this.state})}>
@@ -49,7 +81,7 @@ export default class openIncident extends Component {
                     </Button>
                     <Button type="submit" name="Assign" className="ml2" >
                         Assign
-                    </Button>
+                    </Button></span>: <div></div>}
                     <Button type="submit" className="ml2" name="viewReports" 
                         onClick={this.routeChange}>
                         View Reports

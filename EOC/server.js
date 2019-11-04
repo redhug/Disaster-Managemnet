@@ -14,14 +14,15 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
+mongoose.connect(uri, { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
+//getting routers
 const authRouter = require('./routes/auth.route')
-// const incidentRouter = require('./routes/incident.route')
+const incidentRouter = require('./routes/incident.route')
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -31,8 +32,8 @@ require("./config/passport")(passport);
 app.use("/api/auth", authRouter);
 
 // Routes
-// app.use("/api/incident", incidentRouter);
-//added comments
+app.use("/api/incident", incidentRouter);
+
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 app.get("*", (req, res) => {
