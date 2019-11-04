@@ -1,12 +1,13 @@
-// var express = require('express');
-// var router = express.Router();
-// var incidentController = require('../controllers/incidentController')
-// const bodyParser = require('body-parser');
+var express = require('express');
+var router = express.Router();
+var incidentController = require('../controllers/incidentController')
+const bodyParser = require('body-parser');
 
-// router.use(bodyParser.json());
+router.use(bodyParser.json());
 
-// router.post('/create', incidentController.createIncident);
+router.get('/getIncidents', incidentController.getIncidents);
+router.post('/createIncident', incidentController.createIncident);
+router.post('/closeIncident', incidentController.closeIncident);
 
-
-// module.exports = router;
+module.exports = router;
 
