@@ -8,32 +8,33 @@ class Table extends Component {
    constructor(props) {
       super(props) 
       this.state = { 
-         reources: [
-            { id: 1, type: 'EMS', name: 'Ambulance', status: 'Available', address: 'Maryville' },
-            { id: 2, type: 'EMS', name: 'Air Ambulance', status: 'Staged', address: 'Maryville'},
-            { id: 3, type: 'EMS', name: 'Resource Truck', status: 'Assigned', address: 'Maryville'},
-            { id: 4, type: 'EMS', name: 'Field Aid Station', status: 'Rehabilitating', address: 'Maryville'}
+         resources: [
+            { id: 1, name: 'Ambulance', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com' },
+            { id: 2, name: 'Air Ambulance', status: 'Staged', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+            { id: 3, name: 'Resource Truck', status: 'Assigned', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+            { id: 4, name: 'Field Aid Station', status: 'Rehabilitating', address: 'Maryville', contact: '123456789', email: 'sample@test.com'}
          ]
       }
    }
 
    renderTableData() {
-    return this.state.reources.map((reources, index) => {
-       const { id, type, name, status,address } = reources 
+    return this.state.resources.map((resources, index) => {
+       const { id, type, name, status,address, contact,email } = resources 
        return (
           <tr key={id}>
              <td>{id}</td>
-             <td>{type}</td>
              <td>{name}</td>
              <td>{status}</td>
              <td>{address}</td>
+             <td>{contact}</td>
+             <td>{email}</td>
           </tr>
        )
     })
  }
 
  renderTableHeader() {
-  let header = Object.keys(this.state.reources[0])
+  let header = Object.keys(this.state.resources[0])
   return header.map((key, index) => {
      return <th key={index}>{key.toUpperCase()}</th>
   })
@@ -44,7 +45,19 @@ class Table extends Component {
                  <NavbarApp />
            <div>
             <h1 id='title'>Resources Status</h1>
-            <table id='reources'>
+           <form>
+           <div class="inputBox width50" >
+              <label for="typeofresource">Type of Resource</label>
+                  <select class="form-control" id="typeofresource">
+                      <option value='0'>EMS</option>
+                     <option value='0'>Fire</option>
+                     <option value='1'>Hazmat</option> 
+                     <option value='2'>Utilities</option>
+                     <option value='3'>Person</option>
+                  </select>
+              </div> 
+              </form>
+            <table id='resources'>
             <tbody>
                   <tr>{this.renderTableHeader()}</tr>
                   {this.renderTableData()}

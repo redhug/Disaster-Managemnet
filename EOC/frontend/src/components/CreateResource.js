@@ -2,17 +2,21 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import NavbarApp from "./navbar.component"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactDOM from 'react-dom';
 
 export default class Form extends React.Component {
   state = {
     typeOfResource: "",
     resourceName: "",
     location: "",
+    contactnumber: "",
+    email: "",
     address: "",
     zip:"",
     county:"",
     state:","
   };
+
 
   change = e => {
     this.setState({
@@ -30,6 +34,7 @@ handleChange = (e) => {
     let value = e.target.value;
     this.setState({ type: value, label: label});
 }
+
 
 onSubmit = e =>{
     e.preventDefault();
@@ -71,7 +76,27 @@ onSubmit = e =>{
                  value={this.state.location}
                  onChange={e => this.change(e)}
             />
-          </div> 
+          </div>
+            <div class="form-group width70 ">
+          <label for="contactnumber">Contact Number</label>
+          <input type="number"
+                class="form-control"
+                 name="contactnumber"
+                 placeholder="Contact Number"
+                 value={this.state.location}
+                 onChange={e => this.change(e)}
+            />
+        </div> 
+        <div class="form-group width70 ">
+          <label for="email">Email-id</label>
+          <input type="text"
+                class="form-control"
+                 name="email"
+                 placeholder="email"
+                 value={this.state.location}
+                 onChange={e => this.change(e)}
+            />
+          </div>  
         <div class="form-group">
         <label for="address">Address</label>
         <input type="text"
@@ -142,3 +167,6 @@ onSubmit = e =>{
     );
   }
 }
+
+
+//ReactDOM.render(<Select />, document.getElementById('appp'));

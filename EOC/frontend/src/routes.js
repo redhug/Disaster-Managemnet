@@ -11,6 +11,8 @@ import CreateReport from "./components/createReport";
 import CreateIncident from "./components/createIncident";
 import ViewReports from "./components/viewReports";
 import PrivateRoute from "./private-route/PrivateRoute";
+import Resources from "./components/resources.component";
+
 export default () =>
 
   <Switch>
@@ -21,4 +23,5 @@ export default () =>
     <PrivateRoute path="/createReport" exact component={CreateReport} />
     <PrivateRoute path="/createIncident" exact component={CreateIncident} />
     <PrivateRoute path="/viewReports" exact component={ViewReports} />
+    <PrivateRoute path="/resources" exact component={Resources} />
   </Switch>;
