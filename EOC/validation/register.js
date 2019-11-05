@@ -3,7 +3,7 @@ const isEmpty = require("is-empty");
 
 module.exports = function validateRegisterInput(data) {
   let errors = {};
-
+  var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   // Convert empty fields to an empty string so we can use validator functions
   data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
   data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
@@ -43,9 +43,8 @@ module.exports = function validateRegisterInput(data) {
   if (Validator.isEmpty(data.password2)) {
     errors.password2 = "Confirm password field is required";
   }
-
-  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Password must be at least 6 characters";
+  if(!regularExpression.test(data.password)) {
+    errors.password = "Password must be atleast 6 characters and should contain atleast one number and one special character";
   }
 
   if (!Validator.equals(data.password, data.password2)) {

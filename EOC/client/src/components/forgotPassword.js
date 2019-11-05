@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { store } from 'react-notifications-component';
 
 import {
     FormGroup,
@@ -41,8 +42,24 @@ export default class ForgotPassword extends Component {
             .then(response => {
                 if (response.data.code == 200) {
                     this.props.history.push(
-                        {pathname: '/Login',
-                        data:true});
+                        {
+                            pathname: '/Login',
+                            data: true
+                        });
+                    store.addNotification({
+                        title: "Reset link",
+                        message: "Reset link has been sent to your registered mail.",
+                        type: "info",
+                        insert: "top",
+                        container: "top-right",
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        width: 300,
+                        dismiss: {
+                            duration: 5000,
+                            onScreen: true
+                        }
+                    });
                 } else {
                     this.setState({
                         errors: response.data.message

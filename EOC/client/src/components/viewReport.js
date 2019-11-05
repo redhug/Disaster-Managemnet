@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import NavbarApp from "./navbar.component";
 import { Link } from "react-router-dom";
 
-export default class viewReport extends Component {
+export default class ViewReport extends Component {
     constructor(props) {
         super(props);
         this.state = {

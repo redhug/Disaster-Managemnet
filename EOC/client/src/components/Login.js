@@ -47,15 +47,7 @@ class Login extends Component {
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
-  renderMessage() {
-    if (this.state.renderMsg) {
-      return (
-        <FlashMessage duration={5000}>
-                            <span class="bg-success text-white">Reset link has been sent to your mail</span>
-                        </FlashMessage>
-      );
-    }
-  }
+
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -81,7 +73,6 @@ class Login extends Component {
       <div className="Login">
         <h3 className="text-center">Login</h3>
         <form onSubmit={this.handleSubmit}>
-        {this.renderMessage()}
           <FormGroup controlId="email" bsssize="large">
             <FormLabel>Email</FormLabel>
             <FormControl

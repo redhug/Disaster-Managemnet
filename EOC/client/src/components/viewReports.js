@@ -25,7 +25,7 @@ export default class ViewReports extends Component {
                 <ul>
                     {this.state.reportList.map(item => (
                         <li className="liCss" key={item.id}>
-                            <Link to={{pathname: "/openIncident", data:item}} className="color-white">
+                            <Link to={{pathname: "/openIncident", data:item}} className="color-black">
                                 <u>{item.name}</u>
                             </Link>
                         </li>
@@ -42,7 +42,7 @@ export default class ViewReports extends Component {
                 <div className="App width100 height100">
                     <div className="row width100 height100">
                         <div className="col-md-10">
-                            <h3>Reports List - {this.props.location.state.incident.name}</h3>
+                            <h3>Reports List - {this.props.location.state.incidentName}</h3>
                             {this.reportListManage()}
                         </div>
 

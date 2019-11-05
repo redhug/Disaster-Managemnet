@@ -34,7 +34,8 @@ export default class ForgotPassword extends Component {
 
     handleSendCodeClick = async event => {
         event.preventDefault()
-        if(this.state.password.length >6 && this.state.confirmPassword.length > 6){
+        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+        if(regularExpression.test(this.state.password)){
         if (this.state.password == this.state.confirmPassword) {
             var data = {
                 resetToken: this.props.match.params.token,
@@ -63,7 +64,7 @@ export default class ForgotPassword extends Component {
     }
     else{
         this.setState({
-            errors: "Password length should be more than 6 characters"
+            errors: "Password must be atlease 6 characters and should contain atleast one number and one special character"
         });
     }
     };
