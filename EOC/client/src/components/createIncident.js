@@ -69,30 +69,58 @@ export default class CreateIncident extends Component {
             [name]: value
         });
     }
+    createIncident(){
+        var data = {
+            incidentName: this.state.title,
+            address: this.state.location,
+            dateAndTime: this.state.timeDate,
+            description: this.state.description
+        }
+        axios
+            .post('/api/incident/createIncident', data)
+            .then(response =>{
+                if(response.status == 200){
+                    this.props.history.push('/incidentsList');
+                }else{
+                    console.log(response)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+    editIncident(){
+        var data = {
+            incidentId: this.state.incidentId,
+            incidentName: this.state.title,
+            address: this.state.location,
+            dateAndTime: this.state.timeDate,
+            description: this.state.description
+        }
+        axios
+            .post('/api/incident/editIncident', data)
+            .then(response =>{
+                if(response.status == 200){
+                    this.props.history.push('/incidentsList');
+                }else{
+                    console.log(response)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     handleSubmit(event) {
         event.preventDefault();
-        if(this.state.buttonName="Create Incident"){
+        console.log(this.state.buttonName)
+        if(this.state.buttonName=="Create Incident"){
             console.log(this.state);
-            var data = {
-                incidentName: this.state.title,
-                address: this.state.location,
-                dateAndTime: this.state.timeDate,
-                description: this.state.description
-            }
-            axios
-                .post('/api/incident/createIncident', data)
-                .then(response =>{
-                    if(response.status == 200){
-                        this.props.history.push('/incidentsList');
-                    }else{
-                        console.log(response)
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }        
+            this.createIncident();
+        }  
+        else if(this.state.buttonName=="Edit incident"){
+            this.editIncident();
+        }      
         //window.location = '/incidentsList';
     }
     closeIncident(){

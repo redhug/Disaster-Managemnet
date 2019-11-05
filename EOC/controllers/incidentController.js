@@ -58,3 +58,30 @@ const closeIncident = (req, res) => {
 };
 
 module.exports.closeIncident = closeIncident
+
+const editIncident = (req, res) => {
+    console.log('entered')
+    Incidents.findOneAndUpdate({
+        incidentId:req.body.incidentId
+    }, 
+    {
+        $set:{
+            incidentName: req.body.incidentName,
+            address: req.body.address,
+            dateAndTime: req.body.dateAndTime,
+            description: req.body.description,  
+        }
+    },
+     (error, incident)=>{
+    if(error){
+        return res.json({code: 400, message:'Something went wrong'})
+    }
+    if(incident){
+        return res.json({code: 200, message:'Incident edited.'})
+    }else{
+        return res.json({code: 404, message:'Something went wrong.'})
+    }})
+    .catch(err => res.status(400).json('Error: ' + err));
+};
+
+module.exports.editIncident = editIncident
