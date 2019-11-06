@@ -5,6 +5,8 @@ import { DatetimePickerTrigger } from "rc-datetime-picker";
 import 'rc-datetime-picker/dist/picker.css';
 import NavbarApp from "./navbar.component";
 import { Button } from "react-bootstrap";
+import axios from "axios";
+import { store } from 'react-notifications-component';
 
 export default class CreateIncident extends Component {
     constructor(props) {
@@ -15,9 +17,11 @@ export default class CreateIncident extends Component {
             description: "",
             moment: moment(),
             timeDate: "",
-            buttonName: "Create incident"
+            buttonName: "Create incident",
+            incidentId:0
         };
         this.handleChange = this.handleChange.bind(this);
+        this.closeIncident = this.closeIncident.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -25,8 +29,8 @@ export default class CreateIncident extends Component {
         console.log(this.props.location)
         if (this.props.location) {
             if (this.props.location.state) {
-                if (this.props.location.state.incident && this.props.location.state.incident.name) {
-                    this.setState({ title: this.props.location.state.incident.name });
+                if (this.props.location.state.incidentName) {
+                    this.setState({ title: this.props.location.state.incidentName });
                 }
                 if (this.props.location.state.location) {
                     this.setState({ location: this.props.location.state.location });
@@ -36,6 +40,9 @@ export default class CreateIncident extends Component {
                 }
                 if (this.props.location.state.description) {
                     this.setState({ description: this.props.location.state.description });
+                }
+                if (this.props.location.state.incidentId) {
+                    this.setState({ incidentId: this.props.location.state.incidentId });
                 }
                 if (this.props.location.state.btnName) {
                     if(this.props.location.state.btnName == "update"){
@@ -62,13 +69,105 @@ export default class CreateIncident extends Component {
             [name]: value
         });
     }
+    createIncident(){
+        var data = {
+            incidentName: this.state.title,
+            address: this.state.location,
+            dateAndTime: this.state.timeDate,
+            description: this.state.description
+        }
+        axios
+            .post('/api/incident/createIncident', data)
+            .then(response =>{
+                if(response.status == 200){
+                    this.props.history.push('/incidentsList');
+                }else{
+                    console.log(response)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+    editIncident(){
+        var data = {
+            incidentId: this.state.incidentId,
+            incidentName: this.state.title,
+            address: this.state.location,
+            dateAndTime: this.state.timeDate,
+            description: this.state.description
+        }
+        axios
+            .post('/api/incident/editIncident', data)
+            .then(response =>{
+                if(response.status == 200){
+                    this.props.history.push('/incidentsList');
+                }else{
+                    console.log(response)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("The details are submitted!!!!");
-        console.log(this.state);
-        this.props.history.push('/incidentsList');
+        console.log(this.state.buttonName)
+        if(this.state.buttonName=="Create Incident"){
+            console.log(this.state);
+            this.createIncident();
+        }  
+        else if(this.state.buttonName=="Edit incident"){
+            this.editIncident();
+        }      
         //window.location = '/incidentsList';
+    }
+    closeIncident(){
+        console.log(this.state.incidentId)
+        axios
+                .post('/api/incident/closeIncident',
+                {
+                    params: {
+                        incidentId: this.state.incidentId
+                    }
+                })
+                .then(response =>{
+                    if(response.status == 200){
+                        store.addNotification({
+                            title: "Incident closed!",
+                            message: "The incident is closed!!!",
+                            type: "info",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animated", "fadeIn"],
+                            animationOut: ["animated", "fadeOut"],
+                            width: 300,
+                            dismiss: {
+                              duration: 5000,
+                              onScreen: true
+                            }
+                          });
+                        this.props.history.push('/incidentsList');
+                    }else{
+                        console.log(response)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+            })
+    }
+    renderCloseButton(){
+
+        if(this.state.buttonName != 'Create incident'){
+            return(
+                <div  className="ml2 mt20"><Button name={this.state.buttonName}
+                bssize="large" onClick={e =>
+                    window.confirm("Are you sure you wish to delete this item?") &&
+                    this.closeIncident(e)
+                }>Close incident</Button></div>
+            );
+        }
     }
 
     render() {
@@ -89,10 +188,10 @@ export default class CreateIncident extends Component {
                             />
                         </div>
                         <div className="inputBox width70">
-                            <label htmlFor="location">Location</label>
+                            <label htmlFor="location">Address/Co-ordinates</label>
                             <input
                                 type="text"
-                                placeholder="Location"
+                                placeholder="Address/Co-ordinates"
                                 name="location"
                                 value={this.state.location}
                                 onChange={this.handleChange}
@@ -121,10 +220,12 @@ export default class CreateIncident extends Component {
                                 onChange={this.handleChange}
                             />
                         </div>
-                        <div className="createAccount mt20">
+                        <div className="mt20">
                             <Button name={this.state.buttonName}
                                 bssize="large" type="submit">{this.state.buttonName}</Button>
+                                
                         </div>
+                        {this.renderCloseButton()}
                     </form>
                 </div>
             </div>

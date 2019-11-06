@@ -7,15 +7,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 import classnames from "classnames";
+import FlashMessage from 'react-flash-message'
 
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
       password: "",      
-      errors: {}
+      errors: {},
+      renderMsg:false
     };
   }
   componentDidMount() {
@@ -23,6 +24,12 @@ class Login extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/incidentsList");
     }
+    if(this.props.location) {
+      if(this.props.location.data){
+        this.setState({renderMsg:this.props.location.data});
+      }
+    }
+    
   }
 
   componentWillReceiveProps(nextProps) {

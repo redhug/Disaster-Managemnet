@@ -20,6 +20,7 @@
     justify-content: center;
 }
 
+
 h2 {
     text-align: center;
     width: 100%;
@@ -118,8 +119,8 @@ aside{
 
 .alert-secondary {
     color: #383d41;
-    background-color: #7f8182;
-    border-color: #d6d8db;
+    background-color: #dfe9cc;
+    border: groove;
     padding: 1%;
     border-radius: 10px;
 }
@@ -127,7 +128,13 @@ aside{
 .color-white{
     color: #fcfcfc !important;
 }
+.color-black{
+    color: #000000 !important;
+}
 
 .navbar-dark .navbar-nav .nav-link {
     color: rgb(248, 249, 245);
+}
+.clearfix{
+    clear: both;
 }

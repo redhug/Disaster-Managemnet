@@ -4,6 +4,7 @@ import { Nav, Navbar, NavItem } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
+import logo from "../static/images/logo.png";
 
 class NavbarApp extends Component {
   onLogoutClick = e => {
@@ -13,7 +14,9 @@ class NavbarApp extends Component {
   render() {
     return (
        <Navbar bg="dark" variant="dark">
-       <Link to="/" className="navbar-brand">Emergency Operation Center</Link>
+       <Link to="/" className="navbar-brand">
+       <img src={logo} height="60" width="60" alt="text here" />
+       <span> Emergency Operation Center</span></Link>
        <Navbar.Collapse>
            <Nav className="ml-auto">
                <Link to="/incidentsList" className="nav-link">Incidents List</Link>

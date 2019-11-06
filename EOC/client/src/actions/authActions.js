@@ -1,6 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import { store } from 'react-notifications-component';
 
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
@@ -8,7 +9,23 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/auth/register", userData)
-    .then(res => history.push("/login"))
+    .then(res => {
+      history.push("/login");
+      store.addNotification({
+        title: "Sign up request sent",
+        message: "Sign up request has been sent to Admin. You will recieve mail once it is approved.",
+        type: "info",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        width: 300,
+        dismiss: {
+            duration: 5000,
+            onScreen: true
+        }
+    });
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -20,7 +37,12 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post("/api/auth/login", userData)
+    .get("/api/auth/login",
+    {
+        params: {
+            loginDetails: userData
+        }
+    })
     .then(res => {
       // Save to localStorage
 
@@ -46,7 +68,8 @@ export const loginUser = userData => dispatch => {
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded
+    payload: decoded,
+    role: 'admin'
   };
 };
 

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { store } from 'react-notifications-component';
+
 import {
     FormGroup,
     FormControl,
@@ -39,7 +41,25 @@ export default class ForgotPassword extends Component {
             .post('/api/auth/forgotPassword', { email: this.state.email })
             .then(response => {
                 if (response.data.code == 200) {
-                    this.props.history.push("/Login");
+                    this.props.history.push(
+                        {
+                            pathname: '/Login',
+                            data: true
+                        });
+                    store.addNotification({
+                        title: "Reset link",
+                        message: "Reset link has been sent to your registered mail.",
+                        type: "info",
+                        insert: "top",
+                        container: "top-right",
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        width: 300,
+                        dismiss: {
+                            duration: 5000,
+                            onScreen: true
+                        }
+                    });
                 } else {
                     this.setState({
                         errors: response.data.message
@@ -55,7 +75,6 @@ export default class ForgotPassword extends Component {
         return (
             <div>
                 <NavBarLogin />
-
                 <div className="ResetPassword container">
                     <form onSubmit={this.handleSendCodeClick}>
                         <FormLabel> <h4>Forgot password ?</h4> </FormLabel>
@@ -68,10 +87,10 @@ export default class ForgotPassword extends Component {
                                 value={this.state.email}
                                 onChange={this.handleChange}
                             />
-                         <span className="text-danger">
-                            {this.state.errors}
-                        </span>
-                        </FormGroup>                       
+                            <span className="text-danger">
+                                {this.state.errors}
+                            </span>
+                        </FormGroup>
                         <Button
                             block
                             disabled={!this.validateForm()}
