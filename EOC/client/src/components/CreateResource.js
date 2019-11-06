@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 export default class Form extends React.Component {
   state = {
     typeOfResource: "",
+    subtype: "",
     resourceName: "",
     location: "",
     contactnumber: "",
@@ -59,14 +60,24 @@ onSubmit = e =>{
            </select>
       </div> 
       <div class="inputBox width70">
-        <label for="resourcename">Resource Name</label>
-            <select class="form-control" id="resourcename">
+        <label for="subtype">Sub-type</label>
+            <select class="form-control" id="subtype">
                      <option value='0'>Ambulance</option>
                      <option value='0'>Air Ambulance</option>
                      <option value='1'>Resouce Tank</option> 
                      <option value='2'>Field aid station</option>
             </select>
       </div>
+      <div class="form-group width70 ">
+          <label for="resourcename">Resource Name</label>
+          <input type="text"
+                class="form-control"
+                 name="resourcename"
+                 placeholder="Resource name"
+                 value={this.state.location}
+                 onChange={e => this.change(e)}
+            />
+          </div>
         <div class="form-group width70 ">
           <label for="location">Location</label>
           <input type="text"

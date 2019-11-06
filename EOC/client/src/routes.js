@@ -7,7 +7,7 @@ import CreateReport from "./components/createReport";
 import CreateIncident from "./components/createIncident";
 import ViewReports from "./components/viewReports";
 import ViewReport from "./components/viewReport";
-import LoadMaps from "./components/maps_component";
+//import LoadMaps from "./components/maps_component";
 import PendingRequests from "./components/requests";
 import NewUserDetails from "./components/newUserDetails";
 import PrivateRoute from "./private-route/PrivateRoute";
@@ -16,7 +16,6 @@ export default () =>
 
   <Switch>
     <PrivateRoute exact path="/incidentsList" component={IncidentLists} />
-    <PrivateRoute exact path="/loadMaps" component={LoadMaps} />
     <PrivateRoute path="/incidentsList" exact component={IncidentLists} />
     <PrivateRoute path="/viewIncident" exact component={viewIncident} />
     <PrivateRoute path="/CreateResource" exact component={CreateResource} />
