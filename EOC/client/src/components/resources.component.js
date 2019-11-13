@@ -71,7 +71,8 @@ class Resources extends Component {
             </div>
             <div className="col-md-2 border-left">
               <Button className="btn btn-secondary align-middle"
-                bssize="large" type="submit"><a class="anchorbutton"href ="/createresource">Create New Resource</a></Button>
+                bssize="large" type="submit" onClick={()=>this.props.history.push(
+                  {pathname: '/createresource'})}>Create New Resource</Button>
           </div>
           </div>
           </div>         
