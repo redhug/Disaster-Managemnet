@@ -114,7 +114,7 @@ export default class CreateIncident extends Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.state.buttonName)
-        if(this.state.buttonName=="Create Incident"){
+        if(this.state.buttonName=="Create incident"){
             console.log(this.state);
             this.createIncident();
         }  
