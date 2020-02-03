@@ -36,6 +36,10 @@ const IncidentsSchema = new Schema({
   technicalResources:{
     type:[String],
     required:false
+  },
+  createdBy:{
+    type:String,
+    required:false
   }
   });
 autoIncrement.initialize(mongoose.connection);

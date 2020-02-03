@@ -37,6 +37,9 @@ const ReportSchema = new Schema({
         Yellow: { type: Number },
         Green: { type: Number },
         Black: { type: Number }     
+  },
+  createdBy:{
+    type:String,
   }
   });
 autoIncrement.initialize(mongoose.connection);
