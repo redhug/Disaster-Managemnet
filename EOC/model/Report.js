@@ -9,8 +9,8 @@ const ReportSchema = new Schema({
     unique: true
   },
   incidentId: {
-    type: String,
-    required: true
+    type: Number,
+    required: false
   },
   address: {
     type: String,

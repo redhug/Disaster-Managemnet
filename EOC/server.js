@@ -23,6 +23,7 @@ connection.once('open', () => {
 //getting routers
 const authRouter = require('./routes/auth.route')
 const incidentRouter = require('./routes/incident.route')
+const reportRouter = require('./routes/report.route')
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -33,6 +34,7 @@ app.use("/api/auth", authRouter);
 
 // Routes
 app.use("/api/incident", incidentRouter);
+app.use("/api/report", reportRouter );
 
 app.use(express.static(path.join(__dirname, "client", "build")))
 

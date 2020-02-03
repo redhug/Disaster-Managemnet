@@ -138,8 +138,10 @@ async function removeUser(id) {
 // @desc Login user and return JWT token
 // @access Public
 const login = (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+    var loginDetails = JSON.parse(req.query.loginDetails);
+    req.body
+    const email = loginDetails.email;
+    const password = loginDetails.password;
     // Find user by email
     User.findOne({ email }).then(user => {
         // Check if user exists
