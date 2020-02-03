@@ -163,7 +163,7 @@ export default class CreateIncident extends Component {
             return(
                 <div  className="ml2 mt20"><Button name={this.state.buttonName}
                 bssize="large" onClick={e =>
-                    window.confirm("Are you sure you wish to delete this item?") &&
+                    window.confirm("Are you sure you wish to archive this item?") &&
                     this.closeIncident(e)
                 }>Close incident</Button></div>
             );
