@@ -1,7 +1,7 @@
 .App {
     margin-top: 15px;
     margin-left: 20px;
-    position: fixed;
+    position: absolute;
   }
   
   .App .navbar-brand {

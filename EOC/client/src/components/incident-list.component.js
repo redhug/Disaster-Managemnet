@@ -85,7 +85,6 @@ export default class IncidentList extends Component {
                                 </div>
                             </div>
                             {this.incidentListManage()}
-
                         </div>
 
                         <div className="col-md-2 border-left">

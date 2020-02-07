@@ -16,7 +16,7 @@ const getMyIncidents = (req, res) => {
       .then(incidents => res.json(incidents))
       .catch(err => res.status(400).json('Error: ' + err));
 };
-module.exports.getIncidents = getMyIncidents
+module.exports.getMyIncidents = getMyIncidents
 
 const createIncident = (req, res) => {
     Incidents.findOne({ incidentName: req.body.incidentName }).then(incident => {

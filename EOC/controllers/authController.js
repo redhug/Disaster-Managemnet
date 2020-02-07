@@ -138,10 +138,10 @@ async function removeUser(id) {
 // @desc Login user and return JWT token
 // @access Public
 const login = (req, res) => {
-    var loginDetails = JSON.parse(req.query.loginDetails);
-    req.body
-    const email = loginDetails.email;
-    const password = loginDetails.password;
+    //var loginDetails = JSON.parse(req.body);
+    //req.body
+    const email = req.body.email;
+    const password = req.body.password;
     // Find user by email
     User.findOne({ email }).then(user => {
         // Check if user exists
@@ -188,9 +188,8 @@ const forgotPassword = (req, res) => {
     if (req.body.email == "") {
         return res.status(400).json({ email: "Email required" });
     }
-
     const body = _.pick(req.body, ['email'])
-    console.log(body)
+    
     User.findOne({ email: body.email.toLowerCase() }, (error, user) => {
         if (error) {
             return res.status(400).json({ email: "Email required" });
@@ -251,7 +250,7 @@ const forgotPassword = (req, res) => {
                     })
                 })
 
-        } else {
+        } else {    
             return res.json({ code: 404, message: 'User is not registered' });
         }
 
