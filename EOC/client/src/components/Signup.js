@@ -165,6 +165,11 @@ class Signup extends Component {
                 })}
               />
               <span className="text-danger">{errors.password}</span>
+              <label style={{'font-size': '0.75em'}}>Password must include: <p>English alphabet uppercase letter (A-Z)
+                                        <div>English alphabet lowercase letter (a-z)</div>
+                                       <div>Decimal digit number (0-9)</div> 
+                                        Special characters</p>
+                </label>
             </div>
             <div className="inputBox width50 ml2">
               <label htmlFor="password">Confirm Password</label>
@@ -201,7 +206,7 @@ class Signup extends Component {
             {this.renderCertifications()}
             <div>
               <label htmlFor="legalBadge">
-                Are you a sworn law enforcement officer ?</label>
+                Are you a law enforcement officer ?</label>
               <div className="mb10">
                 <input type="radio" name="legalBadge"
                   checked={this.state.legalBadge === "true"}

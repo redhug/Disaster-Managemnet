@@ -76,8 +76,11 @@ input, textarea, select {
     width: 100%;
 }
 
-.datetime-picker .calendar table, th, td{
-        border: none !important;
+.calendar table, th{
+    border: none !important;
+}
+.calendar td{
+    border: none !important;
 }
 .datetime-picker .calendar .calendar-nav button {
     background: whitesmoke !important;

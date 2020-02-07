@@ -63,7 +63,28 @@ export default class ViewReport extends Component {
                     <h5>Level of Structural Damage:</h5>
                     <p>{this.state.levelOfStrDmg}</p>
                 </div>
-                <div className="mt20">
+                <div class="casualities">
+                <h5>Casualities:</h5>
+                    <table>
+                        <tr>
+                            <td>Red</td>
+                            <td>{this.state.casRed}</td>
+                        </tr>
+                        <tr>
+                            <td>Yellow</td>
+                            <td>{this.state.casYellow}</td>
+                        </tr>
+                        <tr>
+                            <td>Green</td>
+                            <td>{this.state.casGreen}</td>
+                        </tr>
+                        <tr>
+                            <td>Black</td>
+                            <td>{this.state.casBlack}</td>
+                        </tr>
+                    </table>
+                </div>
+                {/* <div className="mt20">
                     <h5>Red:</h5>
                     <p>{this.state.casRed}</p>
                 </div>
@@ -78,7 +99,7 @@ export default class ViewReport extends Component {
                 <div className="mt20">
                     <h5>Black:</h5>
                     <p>{this.state.casBlack}</p>
-                </div>
+                </div> */}
                 <div className="mt20">
                     <h5>Hazmat Type:</h5>
                     <p>{this.state.hazType}</p>

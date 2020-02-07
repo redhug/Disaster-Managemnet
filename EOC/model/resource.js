@@ -14,15 +14,7 @@ const ResourceSchema = new Schema({
     type: String,
     required: true
   },
-  location: {
-    type: String,
-    required: true
-  },
   address: {
-    type: String,
-    required: true
-  },
-  address2: {
     type: String,
     required: true
   },
@@ -38,18 +30,17 @@ const ResourceSchema = new Schema({
     type: Number,
     required: true
   },
-  
   state: {
     type: String,
     required: true
   },
-  resourceMobileNumber:{
-    type: Number, 
+  resourceMobileNumber: {
+    type: Number,
     required: true
   },
   resourceEmail: {
     type: String,
     required: true
   }
-  });
+});
 module.exports = Resource = mongoose.model("Resources", ResourceSchema);

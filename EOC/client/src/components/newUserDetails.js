@@ -12,7 +12,8 @@ export default class NewUserDetails extends Component {
         console.log(this.props);
         this.state = {
             userDetails: this.props.location.state,
-            adminCheck: "false"
+            adminCheck: "false",
+            rejectedReason : ""
         };
         this.rejectUserRequest = this.rejectUserRequest.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,7 +28,8 @@ export default class NewUserDetails extends Component {
             .post('/api/auth/acceptUser',
                 {
                     params: {
-                        id: this.state.userDetails._id
+                        id: this.state.userDetails._id,
+                        isAdmin: this.state.adminCheck
                     }
                 })
             .then(response => {
@@ -79,8 +81,8 @@ export default class NewUserDetails extends Component {
                 message = error
             })
         store.addNotification({
-            title: "Info",
-            message: message,
+            title: message,
+            message: this.state.rejectedReason,
             type: "info",
             insert: "top",
             container: "top-right",
@@ -138,7 +140,11 @@ export default class NewUserDetails extends Component {
                                 checked={this.state.adminCheck === "false"}
                                 className="ml2"
                             />No
-              </div>
+                         </div>
+                    </div>
+                    <div className="inputBox width100">
+                        <label htmlFor="rejection">Reason if rejecting</label>
+                        <textarea name="rejectedReason" value={this.state.rejectedReason} onChange={this.handleChange} />
                     </div>
                 </form>
                 <div className="mt20 text-center">

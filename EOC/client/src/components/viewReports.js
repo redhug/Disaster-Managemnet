@@ -25,7 +25,7 @@ export default class ViewReports extends Component {
                 <ul>
                     {this.state.reportList.map(item => (
                         <li className="liCss" key={item.id}>
-                            <Link to={{pathname: "/openIncident", data:item}} className="color-black">
+                            <Link to={{pathname: "/viewReport", data:item}} className="color-black">
                                 <u>{item.name}</u>
                             </Link>
                         </li>

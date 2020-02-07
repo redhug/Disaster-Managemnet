@@ -5,8 +5,7 @@ const createResource = (req, res) => {
         if (Resource) {
             return res.status(400).json({ email: "Resource already exists" });
         } else {
-            const newResource = new Resource({
-                
+            const newResource = new Resource({                
                 TypeofResource: req.body.TypeofResource,
                 Resourcesubtype: req.body.Resourcesubtype,
                 resourceName: req.body.resourceName,
@@ -18,8 +17,7 @@ const createResource = (req, res) => {
                 zipcode: req.body.zipcode,
                 state: req.body.state,
                 resourceMobileNumber: req.body.resourceMobileNumber,
-                resourceEmail: req.body.resourceEmail,
-                
+                resourceEmail: req.body.resourceEmail                
             });
             newResource
                 .save()
