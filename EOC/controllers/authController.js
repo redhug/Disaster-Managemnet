@@ -76,8 +76,12 @@ const signUp = (req, res) => {
 module.exports.signUp = signUp
 
 const acceptUser = (req, res) => {
+    let email
+    let username
     NewUser.findOne({ _id: req.body.params.id }).then(async (newUser) => {
-                console.log('entered')
+                console.log(newUser)
+                email = newUser.email
+                username = newUser.firstName + " " +newUser.lastName
                 const insertUser = new User({
                     firstName: newUser.firstName,
                     lastName: newUser.lastName,
@@ -87,19 +91,51 @@ const acceptUser = (req, res) => {
                     medicalCertification: newUser.medicalCertification,
                     enforcementOfficer: newUser.enforcementOfficer
                 });
-                console.log('entered')
+               
                 await insertUser
                     .save()
                     .then(async (user) => {
                         const data = await removeUser(req.body.params.id)
-                        return res.json(data)
+                        readHTMLFile(__dirname + '/userAccepted.html', function (err, html) {
+                            console.log('entered mail')
+                            var template = handlebars.compile(html);
+                            var replacements = {
+                                username: username,
+                                type: 'User Accepted',
+                                message1: 'Your request has been accepted!'                                
+                            };
+                            const transporter = nodemailer.createTransport({
+                                service: 'Gmail',
+                                auth: {
+                                    user: 'gdpgroupproject@gmail.com',
+                                    pass: 'Gdp2group$'
+                                }
+                            });
+    
+                            const mailoptions = {
+                                from: 'gdpgroupproject@gmail.com',
+                                to: email,
+                                subject: "Request Accepted",
+                                text:"Hello",
+                                html: template(replacements)
+                            }
+    
+                            transporter.sendMail(mailoptions, function (err, response) {
+                                if (err) {
+                                    return res.json({ code: 400, message: err });
+                                } else {    
+                                    return res.json(data)
+                                }
+                            })
+                        })
+                        
                     })
                     .catch(err => {
+                        //console.log(err)
                         return res.json({ code: 400, message: err })
                     });
             
-        });
-
+        })
 };
 module.exports.acceptUser = acceptUser
 
@@ -120,7 +156,6 @@ const rejectUser = async (req, res) => {
 module.exports.rejectUser = rejectUser
 
 async function removeUser(id) {
-    console.log('entered removeUser')
     await NewUser.remove({ _id: id })
         .then((error) => {
             if (error) {
@@ -208,7 +243,7 @@ const forgotPassword = (req, res) => {
                         return res.json({ code: 400, message: 'Something went wrong' });
                     }
                     readHTMLFile(__dirname + '/resetPassword.html', function (err, html) {
-
+                        console.log("Entered Mail")
                         var template = handlebars.compile(html);
                         var replacements = {
                             username: user.firstName + ' ' + user.lastName,
@@ -220,13 +255,13 @@ const forgotPassword = (req, res) => {
                         const transporter = nodemailer.createTransport({
                             service: 'Gmail',
                             auth: {
-                                user: 'byreddypavan.tr@gmail.com',
-                                pass: 'Lkjhg@07'
+                                user: 'gdpgroupproject@gmail.com',
+                                pass: 'Gdp2group$'
                             }
                         });
 
                         const mailoptions = {
-                            from: 'byreddypavan.tr@gmail.com',
+                            from: 'gdpgroupproject@gmail.com',
                             to: body.email,
                             subject: "Link To Reset Password",
                             text: 'Hi, \n\n' +
