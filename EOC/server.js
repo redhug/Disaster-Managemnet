@@ -33,7 +33,7 @@ require("./config/passport")(passport);
 app.use("/api/auth", authRouter);
 
 // Routes
-app.use("/api/incident", incidentRouter);
+app.use("/api/incident",passport.authenticate('jwt', {session: false}), incidentRouter);
 app.use("/api/report", reportRouter );
 
 app.use(express.static(path.join(__dirname, "client", "build")))
