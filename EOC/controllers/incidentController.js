@@ -13,8 +13,14 @@ module.exports.getIncidents = getIncidents
 
 
 const getMyIncidents = (req, res) => {
-    Incidents.find({  })
-      .then(incidents => res.json(incidents))
+    IncidentAsignee.find({ AssignedTo:req.user.email })
+      .then(assignedIncidents => {
+        const incidentIdList=assignedIncidents.map(a => a.IncidentId);
+        Incidents.find({incidentId:{$in:incidentIdList}})
+        .then(incidents=>res.json(incidents))
+        .catch(err=>res.status(400).json('Error: '+err))
+    }
+        )
       .catch(err => res.status(400).json('Error: ' + err));
 };
 module.exports.getMyIncidents = getMyIncidents
@@ -126,11 +132,6 @@ const assignResourceToIncident = (req, res) => {
           console.log("Multiple documents inserted to Collection");
         }
       });
-
-
-     
-
-   
 
 
 };
