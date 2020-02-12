@@ -9,5 +9,6 @@ router.get('/getIncidents', incidentController.getIncidents);
 router.post('/createIncident', incidentController.createIncident);
 router.post('/closeIncident', incidentController.closeIncident);
 router.post('/editIncident', incidentController.editIncident);
+router.post('/assignResourceToIncident', incidentController.assignResourceToIncident);
 module.exports = router;
 

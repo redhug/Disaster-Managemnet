@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 // Load User model
 const Incidents = require("../model/Incidents");
+const IncidentAsignee = require("../model/IncidentAsignee");
 
 const getIncidents = (req, res) => {
     Incidents.find({ status: req.query.status })
@@ -93,3 +94,45 @@ const editIncident = (req, res) => {
 };
 
 module.exports.editIncident = editIncident
+
+
+const assignResourceToIncident = (req, res) => {
+
+    var IncidentId = req.body.incidentId;
+    var ResourceList = req.body.resourceList;
+
+    var objectList = []
+
+
+
+    ResourceList.forEach(element => {
+
+        var incidentAsignee = {}
+        incidentAsignee.IncidentId=IncidentId
+        incidentAsignee.AssignedTo=element.asigneeEmail
+        incidentAsignee.Isperson=element.Isperson
+        incidentAsignee.AssignedByEmail=req.user.email
+        objectList.push(incidentAsignee);
+
+        
+    });
+
+
+     // save multiple documents to the collection referenced by Book Model
+     IncidentAsignee.collection.insert(objectList, function (err, docs) {
+        if (err){ 
+            return console.error(err);
+        } else {
+          console.log("Multiple documents inserted to Collection");
+        }
+      });
+
+
+     
+
+   
+
+
+};
+
+module.exports.assignResourceToIncident = assignResourceToIncident
