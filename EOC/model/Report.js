@@ -9,15 +9,23 @@ const ReportSchema = new Schema({
     unique: true
   },
   incidentId: {
-    type: Number,
-    required: false
+    type: String,
+    required: true
   },
-  address: {
+  Title: {
     type: String,
     required: true
   },
   dateAndTime: {
     type: Date,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
     required: true
   },
   typeOfIncident: {
@@ -26,20 +34,20 @@ const ReportSchema = new Schema({
   levelOfImpact: {
     type: String,
   },
+  levelOfImpactStructuralDamage: {
+    type: String
+  },
+  Casualities:{
+    Red: { type: Number },
+    Yellow: { type: Number },
+    Green: { type: Number },
+    Black: { type: Number }     
+},
   hazmatType: {
     type: String,
   },
   notes: {
     type: String,
-  },
-  Casualities:{
-        Red: { type: Number },
-        Yellow: { type: Number },
-        Green: { type: Number },
-        Black: { type: Number }     
-  },
-  createdBy:{
-    type:String,
   }
   });
 autoIncrement.initialize(mongoose.connection);

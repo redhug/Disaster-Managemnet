@@ -24,7 +24,6 @@ connection.once('open', () => {
 const authRouter = require('./routes/auth.route')
 const incidentRouter = require('./routes/incident.route')
 const reportRouter = require('./routes/report.route')
-const resourceRouter = require('./routes/resource.route')
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -32,12 +31,10 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/api/auth", authRouter);
-app.use("/api/resource", resourceRouter);
 
 // Routes
-app.use("/api/incident",passport.authenticate('jwt', {session: false}), incidentRouter);
-app.use("/api/report", reportRouter );
-
+app.use("/api/incident", incidentRouter);
+app.use("/api/report", reportRouter);
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 app.get("*", (req, res) => {

@@ -44,13 +44,44 @@ export default class submitReport extends Component {
             [name]: value
         });
     }
-    handleSubmit(event) {
-        event.preventDefault();
-        console.log("The details are submitted!!!!");
-        console.log(this.state);
-        this.props.history.push('/viewReports');
-        //window.location = '/viewReports';
-      }
+    createReport(){
+        var data = {
+            title: this.state.title,
+            timeDate: this.state.timeDate,
+            location: this.state.location,
+            description: this.state.description,
+            typeofIncident: this.state.typeofIncident,
+            impactLevel: this.state.impactLevel,
+            structuralDamageImpact: this.state.structuralDamageImpact,
+            red: this.state.red,
+            green: this.state.green,
+            yellow: this.state.yellow,
+            black: this.state.black,
+            hazmatType: this.state.hazmatType
+        }
+        //axios
+            .post('/api/report/createRepoer', data)
+            .then(response =>{
+                if(response.status == 200){
+                    this.props.history.push('/reportsList');
+                }else{
+                    console.log(response)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+        handleSubmit(event) {
+            event.preventDefault();
+            console.log(this.state.buttonName)
+            if(this.state.buttonName=="Create report"){
+                console.log(this.state);
+                this.createReport();
+            }        
+            //window.location = '/incidentsList';
+        }
+
     render() {
         return (
             <div>
