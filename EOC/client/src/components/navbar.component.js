@@ -22,7 +22,7 @@ class NavbarApp extends Component {
                <Link to="/incidentsList" className="nav-link">Incidents List</Link>
                <Link to="/resources" className="nav-link">Resources</Link>
                <Link to="/incidentsList" className="nav-link">Tutorial</Link>
-               <Link to="/incidentsList" className="nav-link">About us</Link>
+               <Link to="/profile" className="nav-link">Profile</Link>
                <Link to="" onClick={this.onLogoutClick} className="nav-link">Log out</Link>
            </Nav>
        </Navbar.Collapse>

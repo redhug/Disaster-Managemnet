@@ -12,6 +12,7 @@ import PendingRequests from "./components/requests";
 import NewUserDetails from "./components/newUserDetails";
 import PrivateRoute from "./private-route/PrivateRoute";
 import Resources from "./components/resources.component";
+import Profile from "./components/profile";
 export default () =>
 
   <Switch>
@@ -27,4 +28,5 @@ export default () =>
     <PrivateRoute path="/newUserDetails" exact component={NewUserDetails} />
     <PrivateRoute path="/loadMaps" exact component={LoadMaps} />
     <PrivateRoute path="/resources" exact component={Resources} />
+    <PrivateRoute path="/profile" exact component={Profile} />
   </Switch>;
