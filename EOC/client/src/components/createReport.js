@@ -22,6 +22,7 @@ export default class submitReport extends Component {
             black: "",
             hazmatType: "",
             moment: moment(),
+            buttonName: "Submit Report",
             notes: ""
         };
         this.handleChange = this.handleChange.bind(this);
@@ -60,7 +61,7 @@ export default class submitReport extends Component {
             hazmatType: this.state.hazmatType
         }
         //axios
-            .post('/api/report/createRepoer', data)
+            .post('/api/report/createReport', data)
             .then(response =>{
                 if(response.status == 200){
                     this.props.history.push('/reportsList');
@@ -75,7 +76,7 @@ export default class submitReport extends Component {
         handleSubmit(event) {
             event.preventDefault();
             console.log(this.state.buttonName)
-            if(this.state.buttonName=="Create report"){
+            if(this.state.buttonName=="Submit report"){
                 console.log(this.state);
                 this.createReport();
             }        
@@ -222,9 +223,10 @@ export default class submitReport extends Component {
                         <input type="file" name="image" accept="image/*" />
                         </div>
                         <div className="createAccount mt20">
-                        <Button type="submit" bssize="large">
-                            Submit Report
-                        </Button></div>
+                            <Button name={this.state.buttonName}
+                                bssize="large" type="submit">{this.state.buttonName}</Button>
+                                
+                        </div>
                     </form>
                 </div>
             </div>
