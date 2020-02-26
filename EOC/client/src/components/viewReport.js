@@ -37,50 +37,50 @@ export default class ViewReport extends Component {
                 <div >
                     <h2>Sample report</h2>
                     <h5>Title of the Report:</h5>
-                    <span >{this.state.titleOfReport}</span>
+                    <span >{this.props.location.state.Title}</span>
                 </div>
                 <div className="mt20">
                     <h5>Report Date and Time:</h5>
-                    <span >{this.state.reportDateTime}</span>
+                    <span >{this.props.location.state.dateAndTime}</span>
                 </div>
                 <div className="mt20">
                     <h5>Location:</h5>
-                    <span >{this.state.location}</span>
+                    <span >{this.props.location.state.address}</span>
                 </div>
                 <div className="mt20">
                     <h5>Description:</h5>
-                    <p>{this.state.description}</p>
+                    <p>{this.props.location.state.description}</p>
                 </div>
                 <div className="mt20">
                     <h5>Type of Incident:</h5>
-                    <p>{this.state.typeOfincident}</p>
+                    <p>{this.props.location.state.typeOfincident}</p>
                 </div>
                 <div className="mt20">
                     <h5>Level of Impact:</h5>
-                    <p>{this.state.levelOfImpact}</p>
+                    <p>{this.props.location.state.levelOfImpact}</p>
                 </div>
                 <div className="mt20">
                     <h5>Level of Structural Damage:</h5>
-                    <p>{this.state.levelOfStrDmg}</p>
+                    <p>{this.props.location.state.levelOfImpactStructuralDamage}</p>
                 </div>
                 <div class="casualities">
                 <h5>Casualities:</h5>
                     <table>
                         <tr>
                             <td>Red</td>
-                            <td>{this.state.casRed}</td>
+                            <td>{this.props.location.state.Red}</td>
                         </tr>
                         <tr>
                             <td>Yellow</td>
-                            <td>{this.state.casYellow}</td>
+                            <td>{this.props.location.state.Yellow}</td>
                         </tr>
                         <tr>
                             <td>Green</td>
-                            <td>{this.state.casGreen}</td>
+                            <td>{this.props.location.state.Green}</td>
                         </tr>
                         <tr>
                             <td>Black</td>
-                            <td>{this.state.casBlack}</td>
+                            <td>{this.props.location.state.Black}</td>
                         </tr>
                     </table>
                 </div>
@@ -102,11 +102,11 @@ export default class ViewReport extends Component {
                 </div> */}
                 <div className="mt20">
                     <h5>Hazmat Type:</h5>
-                    <p>{this.state.hazType}</p>
+                    <p>{this.props.location.state.hazmatType}</p>
                 </div>
                 <div className="mt20">
                     <h5>Notes:</h5>
-                    <p>{this.state.notes}</p>
+                    <p>{this.props.location.state.notes}</p>
                 </div>
                 {/* <div className="text-center">
                     <Button name="edit" onClick={()=>this.props.history.push(
