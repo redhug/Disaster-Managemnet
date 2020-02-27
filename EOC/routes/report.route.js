@@ -8,5 +8,4 @@ router.use(bodyParser.json());
 router.get('/getReports', incidentController.getReports);
 router.post('/createReport', incidentController.createReport);
 router.post('/closeReport', incidentController.closeReport);
-router.post('/editReport', incidentController.editReport);
 module.exports = router;
