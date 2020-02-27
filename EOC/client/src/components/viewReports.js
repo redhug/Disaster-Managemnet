@@ -6,16 +6,31 @@ import "../static/css/App.css";
 export default class ViewReports extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             reportList: [{ "id": 1, "name": "Bus collided" },
-            { "id": 2, "name": "Farm truck on fire" }]
+            { "id": 2, "name": "Farm truck on fire" }],
+            incidentName:"",
+            incidentId:""
         };
         this.routeChange = this.routeChange.bind(this);
     }
-
+    componentDidMount() {
+         //console.log(this.props.location)
+         if (this.props.location) {
+             if (this.props.location.state) {
+                 console.log(this.props.location.state.name)
+                 if (this.props.location.state.name) {
+                     this.setState({ incidentName: this.props.location.state.name });
+                 }
+                 if (this.props.location.state.id) {
+                     this.setState({ incidentId: this.props.location.state.id });
+                 }
+             }
+         }
+         console.log(this.state)
+     }
     routeChange(){
-        this.props.history.push('/createReport');
+        this.props.history.push({pathname: '/createReport',state: { incidentId: this.state.incidentId }});
         //window.location = '/createIncident'
     }
 
@@ -42,7 +57,7 @@ export default class ViewReports extends Component {
                 <div className="App width100 height100">
                     <div className="row width100 height100">
                         <div className="col-md-10">
-                            <h3>Reports List - {this.props.location.state.incidentName}</h3>
+                            <h3>Reports List - {this.state.incidentName}</h3>
                             {this.reportListManage()}
                         </div>
 

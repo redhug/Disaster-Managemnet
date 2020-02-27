@@ -22,6 +22,7 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-table-filter": "^2.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
   },
@@ -31,7 +32,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+<<<<<<< HEAD
   "proxy": "http://127.0.0.1:5000/",
+=======
+  "proxy": "http://localhost:5000",
+>>>>>>> 1f1392a0e2759fd603ee2a21c690a0cda13095cf
   "eslintConfig": {
     "extends": "react-app"
   },

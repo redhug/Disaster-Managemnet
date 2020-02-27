@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 // Load User model
 const Incidents = require("../model/Incidents");
+const IncidentAsignee = require("../model/IncidentAsignee");
 
 const getIncidents = (req, res) => {
     Incidents.find({ status: req.query.status })
@@ -10,10 +11,22 @@ const getIncidents = (req, res) => {
 };
 module.exports.getIncidents = getIncidents
 
+const userdata=(req,res) =>{
+    if (req.user){
+        return res.status(200).json(req.user);
+    }
+}
+module.exports.userdata=userdata
 
 const getMyIncidents = (req, res) => {
-    Incidents.find({  })
-      .then(incidents => res.json(incidents))
+    IncidentAsignee.find({ AssignedTo:req.user.email })
+      .then(assignedIncidents => {
+        const incidentIdList=assignedIncidents.map(a => a.IncidentId);
+        Incidents.find({incidentId:{$in:incidentIdList}})
+        .then(incidents=>res.json(incidents))
+        .catch(err=>res.status(400).json('Error: '+err))
+    }
+        )
       .catch(err => res.status(400).json('Error: ' + err));
 };
 module.exports.getMyIncidents = getMyIncidents
@@ -35,7 +48,7 @@ const createIncident = (req, res) => {
             });
             newIncident
                 .save()
-                .then(user => res.json(user))
+                .then(incident => res.json(incident))
                 .catch(err => console.log(err));
         }
     });
@@ -93,3 +106,40 @@ const editIncident = (req, res) => {
 };
 
 module.exports.editIncident = editIncident
+
+
+const assignResourceToIncident = (req, res) => {
+
+    var IncidentId = req.body.incidentId;
+    var ResourceList = req.body.resourceList;
+
+    var objectList = []
+
+
+
+    ResourceList.forEach(element => {
+
+        var incidentAsignee = {}
+        incidentAsignee.IncidentId=IncidentId
+        incidentAsignee.AssignedTo=element.asigneeEmail
+        incidentAsignee.Isperson=element.Isperson
+        incidentAsignee.AssignedByEmail=req.user.email
+        objectList.push(incidentAsignee);
+
+        
+    });
+
+
+     // save multiple documents to the collection referenced by Book Model
+     IncidentAsignee.collection.insert(objectList, function (err, docs) {
+        if (err){ 
+            return console.error(err);
+        } else {
+          console.log("Multiple documents inserted to Collection");
+        }
+      });
+
+
+};
+
+module.exports.assignResourceToIncident = assignResourceToIncident

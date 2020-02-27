@@ -48,8 +48,7 @@ export default class viewIncident extends Component {
     }
     routeChange(){
         this.props.history.push(
-                    {pathname: '/viewReports',
-                    state:this.state});
+                    {pathname: '/viewReports',state: { id: this.state.incidentId,name: this.state.incidentName }})
         //window.location = '/createIncident'
     }
     
