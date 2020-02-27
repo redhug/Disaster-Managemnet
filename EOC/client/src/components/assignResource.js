@@ -10,10 +10,20 @@ export default class assignResource extends Component{
         this.state = { 
            resources: [
               { id: 1, type: 'Ambulance', name: 'Mosaic Ambulance', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com' },
-              { id: 2, type: 'Air Ambulance', name: 'Nodway county', status: 'Staged', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
-              { id: 3, type: 'Resource Truck', name: 'Military ', status: 'Assigned', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
-              { id: 4, type: 'Field Aid Station', name: 'Nodaway', status: 'Rehabilitating', address: 'Maryville', contact: '123456789', email: 'sample@test.com'}
-           ]
+              { id: 2, type: 'Air Ambulance', name: 'Nodway county', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 3, type: 'Resource Truck', name: 'Military ', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 4, type: 'Field Aid Station', name: 'Nodaway', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 5, type: 'Resource Truck', name: 'Military ', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 6, type: 'Field Aid Station', name: 'Nodaway', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 1, type: 'Ambulance', name: 'Mosaic Ambulance', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com' },
+              { id: 2, type: 'Air Ambulance', name: 'Nodway county', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 3, type: 'Resource Truck', name: 'Military ', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 4, type: 'Field Aid Station', name: 'Nodaway', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 5, type: 'Resource Truck', name: 'Military ', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
+              { id: 6, type: 'Field Aid Station', name: 'Nodaway', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com'}
+              
+           ],
+            rtype: ['ems','fire,hazmat,utilities,person']
          }
     }
     renderTableData() {
@@ -47,17 +57,20 @@ export default class assignResource extends Component{
         <div>
             <NavbarApp />
              <div style={{margin:"1%"}}>
-                <h2 style={{textAlign:"left"}}>Assign Resource</h2>
+                <h2 style={{textAlign:"left",marginBottom:'3%'}}>Assign Resource</h2>
                 <div className="float-right">
-                <h6>Type of Resource</h6>
-                  <select class="form-control" id="typeofresource">
-                      <option value='0'>EMS</option>
-                     <option value='0'>Fire</option>
-                     <option value='1'>Hazmat</option> 
-                     <option value='2'>Utilities</option>
-                     <option value='3'>Person</option>
-                  </select>
-                  </div>  
+                        <select name="rtype"
+                            className="browser-default custom-select" value={this.state.rtype}
+                                 placeholder="Select status"
+                                 onChange={this.handleChange}>
+                              <option value='EMS'>EMS</option>
+                              <option value='Fire'>Fire</option>
+                              <option value='Hazmat'>Hazmat</option> 
+                              <option value='Utilities'>Utilities</option>
+                              <option value='Person'>Person</option>
+                        </select>
+                  </div> 
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table  id='resources'>
             <tbody>
                   <tr>
@@ -66,7 +79,8 @@ export default class assignResource extends Component{
                   {this.renderTableData()}
                </tbody>
             </table>
-                <Button style={{margin:'5%'}}>Assign</Button>
+            </div>
+                <Button style={{margin:'5%',width:'10%'}}>Assign</Button>
             </div>   
         </div>
        );

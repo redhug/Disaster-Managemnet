@@ -35,3 +35,10 @@
     width: 20%;
     text-align: center;
   }
+
+  .my-custom-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+    }
+    
