@@ -48,7 +48,7 @@ const createIncident = (req, res) => {
             });
             newIncident
                 .save()
-                .then(user => res.json(user))
+                .then(incident => res.json(incident))
                 .catch(err => console.log(err));
         }
     });

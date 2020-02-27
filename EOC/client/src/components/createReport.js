@@ -4,6 +4,7 @@ import NavbarApp from "./navbar.component";
 import { DatetimePickerTrigger } from "rc-datetime-picker";
 import 'rc-datetime-picker/dist/picker.css';
 import moment from "moment";
+import axios from "axios";
 
 export default class submitReport extends Component {
     constructor() {
@@ -22,11 +23,23 @@ export default class submitReport extends Component {
             black: "",
             hazmatType: "",
             moment: moment(),
-            buttonName: "Submit Report",
-            notes: ""
+            notes: "",
+            incidentId:""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    componentDidMount() {
+        //console.log(this.props.location)
+        if (this.props.location) {
+            if (this.props.location.state) {
+                if (this.props.location.state.incidentId) {
+                    console.log(this.props.location.state.incidentId)
+                    this.setState({ incidentId: this.props.location.state.incidentId });
+                }
+            }
+        }
+       // console.log(this.state)
     }
     handleChangeMoment = (moment) => {
         this.setState({
@@ -51,20 +64,23 @@ export default class submitReport extends Component {
             timeDate: this.state.timeDate,
             location: this.state.location,
             description: this.state.description,
-            typeofIncident: this.state.typeofIncident,
+            typeOfIncident: this.state.typeofIncident,
             impactLevel: this.state.impactLevel,
             structuralDamageImpact: this.state.structuralDamageImpact,
             red: this.state.red,
             green: this.state.green,
             yellow: this.state.yellow,
             black: this.state.black,
-            hazmatType: this.state.hazmatType
+            hazmatType: this.state.hazmatType,
+            incidentId: this.state.incidentId,
+            notes: this.state.notes
         }
-        //axios
-            .post('/api/report/createReport', data)
+        axios.post('/api/report/createReport', data)
             .then(response =>{
+                console.log(response)
                 if(response.status == 200){
-                    this.props.history.push('/reportsList');
+                    this.props.history.push(
+                        {pathname: '/viewReports',state: { id: this.state.incidentId,name: this.props.location.state.incidentName }})
                 }else{
                     console.log(response)
                 }
@@ -75,11 +91,8 @@ export default class submitReport extends Component {
     }
         handleSubmit(event) {
             event.preventDefault();
-            console.log(this.state.buttonName)
-            if(this.state.buttonName=="Submit report"){
                 console.log(this.state);
                 this.createReport();
-            }        
             //window.location = '/incidentsList';
         }
 
@@ -132,7 +145,7 @@ export default class submitReport extends Component {
                                 onChange={this.handleChange}
                             />
                         </div>
-                        <div className="inputBox width70">
+                        {/* <div className="inputBox width70">
                             <label htmlFor="typeofIncident">Type of incident</label>
                             <input type="text"
                                 placeholder="Type of incident"
@@ -140,6 +153,20 @@ export default class submitReport extends Component {
                                 value={this.state.typeofIncident}
                                 onChange={this.handleChange}
                             />
+                        </div> */}
+                        <div className="inputBox width70">
+                            <label htmlFor="typeofIncident">Type of incident</label>
+                                <select name="typeofIncident" value={this.state.typeofIncident} 
+                                    onChange={this.handleChange}
+                                    placeholder="Select Incident Type">  
+                                    <option value="">Select Incident Type</option>                                  
+                                    <option value="fire">Fire</option>
+                                    <option value="water">Water</option>
+                                    <option value="collapse">Collapse</option>
+                                    <option value="nature">Nature</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            
                         </div>
                         <div className="inputBox width70">
                             <label htmlFor="impactLevel">Level of Impact</label>
@@ -223,10 +250,9 @@ export default class submitReport extends Component {
                         <input type="file" name="image" accept="image/*" />
                         </div>
                         <div className="createAccount mt20">
-                            <Button name={this.state.buttonName}
-                                bssize="large" type="submit">{this.state.buttonName}</Button>
-                                
-                        </div>
+                        <Button type="submit" bssize="large">
+                            Submit Report
+                        </Button></div>
                     </form>
                 </div>
             </div>
