@@ -116,7 +116,6 @@ const acceptUser = (req, res) => {
                                 from: 'gdpgroupproject@gmail.com',
                                 to: email,
                                 subject: "Request Accepted",
-                                text:"Hello",
                                 html: template(replacements)
                             }
     
@@ -151,6 +150,42 @@ module.exports.pendingRequests = pendingRequests
 
 const rejectUser = async (req, res) => {
     const data = await removeUser(req.body.params.id)
+    console.log(data)
+    readHTMLFile(__dirname + '/userRejected.html', function (err, html) {
+        console.log('entered mail')
+        var template = handlebars.compile(html);
+        var replacements = {
+            username: "User",
+            type: 'User Rejected',
+            message1: 'Your request has been rejected!'                                
+        };
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'gdpgroupproject@gmail.com',
+                pass: 'Gdp2group$'
+            }
+        });
+
+        const mailoptions = {
+            from: 'gdpgroupproject@gmail.com',
+            to: "teluguabhishek97@gmail.com",
+            subject: "Request Rejected",
+            html: template(replacements)
+        }
+
+        transporter.sendMail(mailoptions, function (err, response) {
+            if (err) {
+                return res.json({ code: 400, message: err });
+            } else {    
+                return res.json(data)
+            }
+        })
+    })  .catch(err => {
+        console.log(err)
+       // return res.json({ code: 400, message: err })
+    });
+    
     return res.json(data)
 };
 module.exports.rejectUser = rejectUser
@@ -165,7 +200,7 @@ async function removeUser(id) {
             //console.log(incidents)
         })
         .catch(err => { return { code: 400, message: err } });
-    return { code: 200, message: "User accepted" }
+    return { code: 200, message: "User rejected" }
 }
 
 
@@ -276,6 +311,7 @@ const forgotPassword = (req, res) => {
 
                         transporter.sendMail(mailoptions, function (err, response) {
                             if (err) {
+                                console.log(err)
                                 return res.json({ code: 400, message: err });
                             } else {
 
