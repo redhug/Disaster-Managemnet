@@ -50,6 +50,6 @@ export default class profile extends Component
                     <email><b><u>gdpproject@gmail.com</u></b></email>
                 </div>
             </div> 
-        )
+        );
     }
 }
