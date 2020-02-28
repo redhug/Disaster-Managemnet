@@ -12,8 +12,7 @@ export default class NewUserDetails extends Component {
         console.log(this.props);
         this.state = {
             userDetails: this.props.location.state,
-            adminCheck: "false",
-            rejectedReason : ""
+            adminCheck: "false"
         };
         this.rejectUserRequest = this.rejectUserRequest.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -61,6 +60,7 @@ export default class NewUserDetails extends Component {
     }
     async rejectUserRequest() {
         var message = ""
+        var rejectedReason = ""
         await axios
             .post('/api/auth/rejectUser',
                 {
@@ -72,17 +72,21 @@ export default class NewUserDetails extends Component {
                 console.log(response)
                 if (response.data.code == 200) {
                     message = "User rejected"
+                    rejectedReason = "User is rejected"
+                    console.log(message)
                     this.props.history.push("/pendingRequests");
                 } else {
                     message = 'Something went wrong'
                 }
             })
             .catch(error => {
+                console.log(message)
+                rejectedReason = "Something went wrong"
                 message = error
             })
         store.addNotification({
             title: message,
-            message: this.state.rejectedReason,
+            message: rejectedReason,
             type: "info",
             insert: "top",
             container: "top-right",

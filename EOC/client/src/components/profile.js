@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NavbarApp from "./navbar.component";
+import axios from "axios"; 
 
 export default class profile extends Component
 {
@@ -8,14 +9,28 @@ export default class profile extends Component
         super(props);
         this.state=
         {
-        firstName:"Pavan kumar reddy",
-        lastName:"byreddy",
-        email:"pavan@gmail.com",
-        contactNo:"6605380989",
-        medicalCertification:"hi ",
-        enforcementOfficer:false
+        firstName:"",
+        lastName:"",
+        email:"",
+        contactNo:"",
+        medicalCertification:"",
+        enforcementOfficer:''
         };
-        //this.handleEvent=this.handleEvent.bind(this);
+    }
+    componentDidMount() {
+        this.userinfo();
+     }
+     async userinfo(){
+         await axios.get('/api/incident/userdata')
+         .then(response => {
+             console.log(response)
+            this.setState({ firstName: response.data.firstName, lastName:response.data.lastName,
+             email:response.data.email,contactNo:response.data.contactNo,medicalCertification:response.data.medicalCertification,
+            enforcementOfficer:response.data.enforcementOfficer})
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
     render()
     {
@@ -28,13 +43,13 @@ export default class profile extends Component
                     <h6 style={{marginBottom:"2rem"}}>Last Name:  {this.state.lastName} </h6>
                     <h6 style={{marginBottom:"2rem"}}>Contact Number: {this.state.contactNo}</h6>
                     <h6 style={{marginBottom:"2rem"}}>Medical Certifications: {this.state.medicalCertification ? this.state.medicalCertification :"No medical certifications"}</h6>
-                    <h6 style={{marginBottom:"2rem"}}>Enforcement Officer:{this.state.enforcementOfficer?"enforcementOfficer: 6605380989":"Not an enforcementOfficer"}</h6>
+                    <h6 style={{marginBottom:"2rem"}}>Enforcement Officer: {(this.state.enforcementOfficer=='true')?"Yes":"Not an enforcementOfficer"}</h6>
                 </div>  
                 <div style={{textAlign:"center"}}>
                     <h6 style={{paddingTop: "10rem"}}>If you find any information present above is wrong. kindly reach out to below email id requesting necessary modifications.</h6>
                     <email><b><u>gdpproject@gmail.com</u></b></email>
                 </div>
             </div> 
-        )
+        );
     }
 }

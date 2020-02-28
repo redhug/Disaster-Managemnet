@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NavbarApp from "./navbar.component"
 import "../static/css/App.css";
+import axios from "axios";
+import MapsComponent from "./maps_component";
 
 export default class ViewReports extends Component {
     constructor(props) {
@@ -13,24 +15,34 @@ export default class ViewReports extends Component {
             incidentId:""
         };
         this.routeChange = this.routeChange.bind(this);
+        this.getReports = this.getReports.bind(this);
     }
-    componentDidMount() {
+    async componentDidMount() {
          //console.log(this.props.location)
          if (this.props.location) {
              if (this.props.location.state) {
-                 console.log(this.props.location.state.name)
                  if (this.props.location.state.name) {
                      this.setState({ incidentName: this.props.location.state.name });
                  }
                  if (this.props.location.state.id) {
                      this.setState({ incidentId: this.props.location.state.id });
+                     await this.getReports(this.props.location.state.id);
                  }
              }
          }
-         console.log(this.state)
+     }
+     async getReports(incidentId){
+        await axios.get(`/api/report/getReports?incidentId=${incidentId}`)
+        .then(response => {
+           // console.log(response.data)
+            this.setState({ reportList: response.data })
+        })
+        .catch((error) => {
+            console.log(error);
+        })
      }
     routeChange(){
-        this.props.history.push({pathname: '/createReport',state: { incidentId: this.state.incidentId }});
+        this.props.history.push({pathname: '/createReport',state: { incidentId: this.state.incidentId,name: this.state.incidentName }});
         //window.location = '/createIncident'
     }
 
@@ -41,7 +53,7 @@ export default class ViewReports extends Component {
                     {this.state.reportList.map(item => (
                         <li className="liCss" key={item.id}>
                             <Link to={{pathname: "/viewReport", data:item}} className="color-black">
-                                <u>{item.name}</u>
+                                <u>{item.title}</u>
                             </Link>
                         </li>
                     ))}
@@ -58,7 +70,8 @@ export default class ViewReports extends Component {
                     <div className="row width100 height100">
                         <div className="col-md-10">
                             <h3>Reports List - {this.state.incidentName}</h3>
-                            {this.reportListManage()}
+                            {/* {this.reportListManage()} */}
+                            <MapsComponent history= {this.props.history} incidentId = {this.state.incidentId}/>
                         </div>
 
                         <div className="col-md-2 border-left">
