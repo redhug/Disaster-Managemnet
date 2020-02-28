@@ -4,7 +4,7 @@
     "client-install": "cd EOC && npm install --prefix client",
     "client": "cd EOC && npm start --prefix client",
     "start": "cd EOC && node server.js",
-	"dev": "concurrently \"cd EOC && npm run server\" \"cd EOC && npm run client\""
+	"dev": "concurrently \"cd EOC && npm run server\" \"cd EOC && npm run client\"",
 	"heroku-postbuild": "cd EOC\\client && npm install --only=dev && npm install && npm run build"
   },
   "engines": {
