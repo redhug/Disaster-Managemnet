@@ -5,6 +5,7 @@ import NavbarApp from "./navbar.component"
 import "../static/css/App.css";
 import axios from "axios";
 import moment from "moment";
+import store from "../store";
 
 export default class PendingRequests extends Component {
     constructor(props) {
@@ -15,8 +16,13 @@ export default class PendingRequests extends Component {
         };
         this.routeChange = this.routeChange.bind(this);
     }
-    componentDidMount() {
-       this.getPendingRequests();
+    async componentDidMount() {
+             if(store.getState().auth.isAdmin){
+                this.getPendingRequests();
+             }
+             else{
+                this.props.history.push("/incidentsList");
+             }
     }
     async getPendingRequests(){
         await axios.get('/api/auth/pendingRequests')
