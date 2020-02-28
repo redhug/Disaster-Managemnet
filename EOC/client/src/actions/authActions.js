@@ -41,14 +41,15 @@ export const loginUser = userData => dispatch => {
       // Save to localStorage
 
       // Set token to localStorage
-      const { token } = res.data;
-      localStorage.setItem("jwtToken", token);
+      const { token,isAdmin } = res.data;
+      localStorage.setItem("jwtToken", token);  
+      localStorage.setItem("isAdmin", JSON.stringify(isAdmin)); 
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
       // Set current user
-      dispatch(setCurrentUser(decoded));
+      dispatch(setCurrentUser(decoded,isAdmin));
     })
     .catch(err =>
       dispatch({
@@ -59,11 +60,11 @@ export const loginUser = userData => dispatch => {
 };
 
 // Set logged in user
-export const setCurrentUser = decoded => {
+export const setCurrentUser = (decoded,isAdmin) => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded,
-    role: 'admin'
+    isAdmin: isAdmin,
+    payload: decoded
   };
 };
 
@@ -78,6 +79,7 @@ export const setUserLoading = () => {
 export const logoutUser = () => dispatch => {
   // Remove token from local storage
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("isAdmin");
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false

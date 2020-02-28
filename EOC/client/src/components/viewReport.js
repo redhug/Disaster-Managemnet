@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import NavbarApp from "./navbar.component";
-import { Link } from "react-router-dom";
+import moment from "moment";
 
 export default class ViewReport extends Component {
     constructor(props) {
@@ -26,7 +26,14 @@ export default class ViewReport extends Component {
         };
        // this.routeChange = this.routeChange.bind(this);
     }
-    
+     renderDate(){
+        let date = moment(this.props.location.state.report.dateAndTime);
+        return(
+            <span>
+                {date.format("MM/DD/YYYY HH:mm") }
+            </span>
+        )
+     }
     
     
     render() {
@@ -37,51 +44,53 @@ export default class ViewReport extends Component {
                 <div >
                     <h2>Sample report</h2>
                     <h5>Title of the Report:</h5>
-                    <span >{this.props.location.state.Title}</span>
+                    <span >{this.props.location.state.report.title}</span>
                 </div>
                 <div className="mt20">
                     <h5>Report Date and Time:</h5>
-                    <span >{this.props.location.state.dateAndTime}</span>
+                    {this.renderDate()}
                 </div>
                 <div className="mt20">
                     <h5>Location:</h5>
-                    <span >{this.props.location.state.address}</span>
+                    <span >{this.props.location.state.report.address}</span>
                 </div>
                 <div className="mt20">
                     <h5>Description:</h5>
-                    <p>{this.props.location.state.description}</p>
+                    <p>{this.props.location.state.report.description}</p>
                 </div>
                 <div className="mt20">
-                    <h5>Type of Incident:</h5>
-                    <p>{this.props.location.state.typeOfincident}</p>
+                    <h5>Type of Incident:</h5>                    
+                    <p>{this.props.location.state.report.typeOfIncident}</p>
                 </div>
                 <div className="mt20">
                     <h5>Level of Impact:</h5>
-                    <p>{this.props.location.state.levelOfImpact}</p>
+                    <p>{this.props.location.state.report.levelOfImpact}</p>
                 </div>
                 <div className="mt20">
                     <h5>Level of Structural Damage:</h5>
-                    <p>{this.props.location.state.levelOfImpactStructuralDamage}</p>
+                    <p>{this.props.location.state.report.levelOfImpactStructuralDamage}</p>
                 </div>
-                <div class="casualities">
+                <div className="casualities">
                 <h5>Casualities:</h5>
                     <table>
+                        <tbody>
                         <tr>
                             <td>Red</td>
-                            <td>{this.props.location.state.Red}</td>
+                            <td>{this.props.location.state.report.casualities.red}</td>
                         </tr>
                         <tr>
                             <td>Yellow</td>
-                            <td>{this.props.location.state.Yellow}</td>
+                            <td>{this.props.location.state.report.casualities.yellow}</td>
                         </tr>
                         <tr>
                             <td>Green</td>
-                            <td>{this.props.location.state.Green}</td>
+                            <td>{this.props.location.state.report.casualities.green}</td>
                         </tr>
                         <tr>
                             <td>Black</td>
-                            <td>{this.props.location.state.Black}</td>
+                            <td>{this.props.location.state.report.casualities.black}</td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
                 {/* <div className="mt20">
@@ -102,11 +111,11 @@ export default class ViewReport extends Component {
                 </div> */}
                 <div className="mt20">
                     <h5>Hazmat Type:</h5>
-                    <p>{this.props.location.state.hazmatType}</p>
+                    <p>{this.props.location.state.report.hazmatType}</p>
                 </div>
                 <div className="mt20">
                     <h5>Notes:</h5>
-                    <p>{this.props.location.state.notes}</p>
+                    <p>{this.props.location.state.report.notes}</p>
                 </div>
                 {/* <div className="text-center">
                     <Button name="edit" onClick={()=>this.props.history.push(

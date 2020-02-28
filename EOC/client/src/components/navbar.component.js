@@ -5,8 +5,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
 import logo from "../static/images/logo.png";
+import store from "../store";
 
 class NavbarApp extends Component {
+  constructor(props) {
+    super(props)
+    this.state={
+      user:{}
+    }
+  }
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -21,6 +28,9 @@ class NavbarApp extends Component {
            <Nav className="ml-auto">
                <Link to="/incidentsList" className="nav-link">Incidents List</Link>
                <Link to="/resources" className="nav-link">Resources</Link>
+               {store.getState().auth.isAdmin &&
+                 <Link to="/pendingRequests" className="nav-link">Manage Users</Link>
+               }
                <Link to="/incidentsList" className="nav-link">Tutorial</Link>
                <Link to="/profile" className="nav-link">Profile</Link>
                <Link to="" onClick={this.onLogoutClick} className="nav-link">Log out</Link>
