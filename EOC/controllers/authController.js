@@ -89,7 +89,8 @@ const acceptUser = (req, res) => {
                     password: newUser.password,
                     contactNo: newUser.contactNo,
                     medicalCertification: newUser.medicalCertification,
-                    enforcementOfficer: newUser.enforcementOfficer
+                    enforcementOfficer: newUser.enforcementOfficer,
+                    isAdmin: req.body.params.isAdmin
                 });
                
                 await insertUser
@@ -150,7 +151,6 @@ module.exports.pendingRequests = pendingRequests
 
 const rejectUser = async (req, res) => {
     const data = await removeUser(req.body.params.id)
-    console.log(data)
     readHTMLFile(__dirname + '/userRejected.html', function (err, html) {
         console.log('entered mail')
         var template = handlebars.compile(html);
@@ -237,6 +237,7 @@ const login = (req, res) => {
                     (err, token) => {
                         res.json({
                             success: true,
+                            isAdmin:user.isAdmin,
                             token: "Bearer " + token
                         });
                     }
