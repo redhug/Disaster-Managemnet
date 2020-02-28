@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "heroku-prebuild": "cd EOC && npm install && npm run build && cd .. && cd api && npm install",
+    "heroku-prebuild": "cd EOC && npm install && npm run build",
     "start": "cd EOC && node server.js"
   },
   "engines": {
