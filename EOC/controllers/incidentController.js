@@ -44,7 +44,9 @@ const createIncident = (req, res) => {
                 address: req.body.address,
                 dateAndTime: req.body.dateAndTime,
                 description: req.body.description,
-                status: "open"
+                status: "open",
+                lat: req.body.lat,
+                lng: req.body.lng
             });
             newIncident
                 .save()

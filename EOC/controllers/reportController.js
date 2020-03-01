@@ -37,7 +37,9 @@ const createReport = (req, res) => {
                 casualities:casualities,
                 hazmatType: req.body.hazmatType,
                 notes: req.body.notes,
-                createdBy: req.user.email
+                createdBy: req.user.email,
+                lat: req.body.lat,
+                lng: req.body.lng
             });
             newReport.markModified('casualities');
             newReport
