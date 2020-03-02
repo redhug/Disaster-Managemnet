@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var resourceController = require('../controllers/resourceController')
+var resourceController = require('../controllers/resourcesController')
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.json());
 
-router.post('/createIncident/', resourceController.createResource);
+router.post('/createResource', resourceController.createResource);
 
 module.exports = router;
 

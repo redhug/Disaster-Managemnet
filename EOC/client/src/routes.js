@@ -13,6 +13,7 @@ import NewUserDetails from "./components/newUserDetails";
 import PrivateRoute from "./private-route/PrivateRoute";
 import Resources from "./components/resources.component";
 import Profile from "./components/profile";
+import AssignResource from "./components/assignResource";
 export default () =>
 
   <Switch>
@@ -29,4 +30,5 @@ export default () =>
     <PrivateRoute path="/loadMaps" exact component={LoadMaps} />
     <PrivateRoute path="/resources" exact component={Resources} />
     <PrivateRoute path="/profile" exact component={Profile} />
+    <PrivateRoute path="/assignResource" exact component={AssignResource} />
   </Switch>;

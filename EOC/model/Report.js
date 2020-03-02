@@ -12,7 +12,7 @@ const ReportSchema = new Schema({
     type: String,
     required: true
   },
-  Title: {
+  title: {
     type: String,
     required: true
   },
@@ -31,17 +31,25 @@ const ReportSchema = new Schema({
   typeOfIncident: {
     type: String,
   },
+  lat : {
+    type: Number,
+    default: 0
+  },
+  lng:{
+    type: Number,
+    default: 0
+  },
   levelOfImpact: {
-    type: String,
+    type: String
   },
   levelOfImpactStructuralDamage: {
     type: String
   },
-  Casualities:{
-    Red: { type: Number },
-    Yellow: { type: Number },
-    Green: { type: Number },
-    Black: { type: Number }     
+  casualities:{
+    red: { type: Number, default:0 },
+    yellow: { type: Number,default:0  },
+    green: { type: Number,default:0  },
+    black: { type: Number,default:0  }     
 },
   hazmatType: {
     type: String,
@@ -49,10 +57,7 @@ const ReportSchema = new Schema({
   notes: {
     type: String,
   },
-  longitude: {
-    type: String
-  },
-  latitude:{
+  createdBy:{
     type: String
   }
   });

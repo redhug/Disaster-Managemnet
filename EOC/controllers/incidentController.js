@@ -11,6 +11,12 @@ const getIncidents = (req, res) => {
 };
 module.exports.getIncidents = getIncidents
 
+const userdata=(req,res) =>{
+    if (req.user){
+        return res.status(200).json(req.user);
+    }
+}
+module.exports.userdata=userdata
 
 const getMyIncidents = (req, res) => {
     IncidentAsignee.find({ AssignedTo:req.user.email })
@@ -38,11 +44,13 @@ const createIncident = (req, res) => {
                 address: req.body.address,
                 dateAndTime: req.body.dateAndTime,
                 description: req.body.description,
-                status: "open"
+                status: "open",
+                lat: req.body.lat,
+                lng: req.body.lng
             });
             newIncident
                 .save()
-                .then(user => res.json(user))
+                .then(incident => res.json(incident))
                 .catch(err => console.log(err));
         }
     });

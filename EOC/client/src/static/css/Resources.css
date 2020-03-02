@@ -31,10 +31,14 @@
     background-color: #006747;
     color: white;
   }
-  .casualities table, th, td {
-    border: 1px solid black !important;
-  }
   .casualities table {
     width: 20%;
     text-align: center;
   }
+
+  .my-custom-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+    }
+    
