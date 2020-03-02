@@ -30,7 +30,9 @@ const createReport = (req, res) => {
                 green: req.body.green,
                 black: req.body.black,
                 hazmatType: req.body.hazmatType,
-                notes: req.body.notes
+                notes: req.body.notes,
+                longitude:req.body.longitude,
+                latitude:req.body.latitude
             });
             newReport
                 .save()
@@ -86,7 +88,9 @@ const editReport = (req, res) => {
                 green: req.body.green,
                 black: req.body.black,
                 hazmatType: req.body.hazmatType,
-                notes: req.body.notes 
+                notes: req.body.notes,
+                longitude:req.body.longitude,
+                latitude:req.body.latitude 
         }
     },
      (error, report)=>{

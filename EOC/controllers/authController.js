@@ -75,6 +75,40 @@ const signUp = (req, res) => {
 
 module.exports.signUp = signUp
 
+
+const UpdateUser = (req, res) => {
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
+            User.findOne({ email: req.body.email }).then(user => {
+                if (user) {
+
+                    const newUser = new NewUser({
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        email: req.body.email,
+                        password: req.body.password,
+                        contactNo: req.body.contactNo,
+                        medicalCertification: req.body.medicalCertification,
+                        enforcementOfficer: req.body.enforcementOfficer
+                    });
+
+                   
+                } else {
+                    
+                    return res.status(400).json("User Does not exist");
+                }
+            });
+        
+   
+};
+
+module.exports.UpdateUser = UpdateUser
+
 const acceptUser = (req, res) => {
     let email
     let username

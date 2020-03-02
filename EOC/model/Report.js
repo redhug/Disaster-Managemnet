@@ -48,6 +48,12 @@ const ReportSchema = new Schema({
   },
   notes: {
     type: String,
+  },
+  longitude: {
+    type: String
+  },
+  latitude:{
+    type: String
   }
   });
 autoIncrement.initialize(mongoose.connection);
