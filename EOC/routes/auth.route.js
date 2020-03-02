@@ -12,5 +12,6 @@ router.post('/resetPassword', authController.resetPassword)
 router.get('/pendingRequests', authController.pendingRequests)
 router.post('/rejectUser', authController.rejectUser)
 router.post('/acceptUser', authController.acceptUser)
+router.post('/UpdateUser', authController.UpdateUser)
 module.exports = router;
 

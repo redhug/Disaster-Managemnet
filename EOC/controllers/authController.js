@@ -84,25 +84,30 @@ const UpdateUser = (req, res) => {
         return res.status(400).json(errors);
     }
 
-            User.findOne({ email: req.body.email }).then(user => {
-                if (user) {
+    User.findOneAndUpdate({
+        email: req.body.email 
+            }, 
+            {
+                        $set:{
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            contactNo: req.body.contactNo,
+                            medicalCertification: req.body.medicalCertification,
+                            enforcementOfficer: req.body.enforcementOfficer
+                        }
+                    },
+                     (error, report)=>{
+                    if(error){
+                        return res.json({code: 400, message:'Something went wrong'})
+                    }
+                    if(report){
+                        return res.json({code: 200, message:'User updated.'})
+                    }else{
+                        return res.json({code: 404, message:'Something went wrong.'})
+                    }})
+                    .catch(err => res.status(400).json('Error: ' + err));
 
-                    const newUser = new NewUser({
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        email: req.body.email,
-                        password: req.body.password,
-                        contactNo: req.body.contactNo,
-                        medicalCertification: req.body.medicalCertification,
-                        enforcementOfficer: req.body.enforcementOfficer
-                    });
-
-                   
-                } else {
-                    
-                    return res.status(400).json("User Does not exist");
-                }
-            });
+           
         
    
 };
