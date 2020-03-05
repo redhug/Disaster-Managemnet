@@ -3,16 +3,15 @@ import { Button } from "react-bootstrap";
 import NavbarApp from "./navbar.component"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactDOM from 'react-dom';
+import axios from "axios";
 
-export default class Form extends React.Component {
-
+export default class createResource extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       typeOfResource: "",
       subtype: "",
       resourceName: "",
-      location: "",
       contactnumber: "",
       email: "",
       address: "",
@@ -34,10 +33,36 @@ handleChange(e) {
   });
 }
 
+createResource(){
+  var data = {
+    typeOfResource: this.state.typeOfResource,
+    subtype: this.state.subtype,
+    resourceName: this.state.resourceName,
+    contactnumber: this.state.contactnumber,
+    email: this.state.email,
+    address: this.state.address,
+    zip: this.state.zip,
+    county: this.state.county,
+    city: this.state.city,
+    state: this.state.state
+  }
+  axios.post('/api/resource/createResource', data)
+      .then(response =>{
+        if(response.status == 200){
+            this.props.history.push('/resources');
+        }else{
+            console.log(response)
+        }
+    })
+      .catch(error => {
+          console.log(error)
+      })
+}
 
 onSubmit = e =>{
     e.preventDefault();
     console.log(this.state);
+    this.createResource();
 };
 
   render() {
@@ -53,11 +78,11 @@ onSubmit = e =>{
                                     onChange={this.handleChange}
                                     placeholder="Select resource type">  
                                     <option value="">Select resource type</option>                                  
-                                    <option value="ems">EMS</option>
-                                    <option value="fire">Fire</option>
-                                    <option value="hazmat">Hazmat</option>
-                                    <option value="utilities">Utilities</option>
-                                    <option value="others">Others</option>
+                                    <option value="EMS">EMS</option>
+                                    <option value="Fire">Fire</option>
+                                    <option value="Hazmat">Hazmat</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Others">Others</option>
             </select>
       </div> 
       <div class="inputBox width70">

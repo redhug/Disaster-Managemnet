@@ -2,27 +2,28 @@ import React, { Component } from 'react'
 import NavbarApp from "./navbar.component"
 import { Button } from "react-bootstrap";
 import "../static/css/Resources.css";
+import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Resources extends Component {
    constructor(props) {
       super(props) 
       this.state = { 
-         resources: [
-            { id: 1, type: 'Ambulance', name: 'Mosaic Ambulance', status: 'Available', address: 'Maryville', contact: '123456789', email: 'sample@test.com' },
-            { id: 2, type: 'Air Ambulance', name: 'Nodway county', status: 'Staged', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
-            { id: 3, type: 'Resource Truck', name: 'Military ', status: 'Assigned', address: 'Maryville', contact: '123456789', email: 'sample@test.com'},
-            { id: 4, type: 'Field Aid Station', name: 'Nodaway', status: 'Rehabilitating', address: 'Maryville', contact: '123456789', email: 'sample@test.com'}
-         ]
+         resources: [],
+         restype: "EMS"
       }
+      this.handleChange = this.handleChange.bind(this);
+      this.getResourcesList = this.getResourcesList.bind(this);
+   }
+   componentDidMount(){
+      this.getResourcesList(this.state.restype)
    }
 
    renderTableData() {
     return this.state.resources.map((resources, index) => {
-       const { id, type, name, status,address, contact,email } = resources 
+       const { type, name, status,address, contact,email } = resources 
        return (
-          <tr key={id}>
-             <td>{id}</td>
+          <tr >
              <td>{type}</td>
              <td>{name}</td>
              <td>{status}</td>
@@ -33,9 +34,33 @@ class Resources extends Component {
        )
     })
  }
-
+ async getResourcesList(type){
+   await axios.get('/api/resource/getResources',
+   {
+       params: {
+         typeOfResource: type
+       }
+   })
+   .then(response => {
+       console.log(response.data)
+       this.setState({ resources: response.data })
+   })
+   .catch((error) => {
+       console.log(error);
+   })
+}
+ handleChange(e) {
+   let target = e.target;
+   let value = target.value;
+   let name = target.name;
+   //console.log(target.name)
+   this.setState({
+     [name]: value
+   });
+   this.getResourcesList(value);
+ }
  renderTableHeader() {
-  let header = Object.keys(this.state.resources[0])
+  let header = (this.state.resources.length>0)?Object.keys(this.state.resources[0]):[]
   return header.map((key, index) => {
      return <th key={index}>{key.toUpperCase()}</th>
   })
@@ -52,13 +77,19 @@ class Resources extends Component {
                  <h1 id='title' className="float-left">Resources</h1>    
                  <div className="float-right mb10">
               <h6>Type of Resource</h6>
-                  <select class="form-control" id="typeofresource">
-                      <option value='0'>EMS</option>
-                     <option value='0'>Fire</option>
-                     <option value='1'>Hazmat</option> 
-                     <option value='2'>Utilities</option>
-                     <option value='3'>Person</option>
-                  </select>
+                  <select
+              name="restype"
+              className="form-control"
+              value={this.state.restype}
+              placeholder="Select status"
+              onChange={this.handleChange}
+            >
+              <option value="EMS">EMS</option>
+              <option value="Fire">Fire</option>
+              <option value="Hazmat">Hazmat</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Person">Person</option>
+            </select>
                   </div>      
               </div> 
 
