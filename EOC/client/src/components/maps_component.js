@@ -141,7 +141,7 @@ class MapsComponent extends Component {
             return <Marker key={index} id={index} position={{
              lat: report.lat,
              lng: report.lng
-           }} icon={iconMarker} title="hello"
+           }} icon={iconMarker} title={report.title}
                 onClick={this.onMarkerClick}
              // onClick={() => this.props.history.push({pathname: '/viewReport',data:report})}
             >
