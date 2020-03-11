@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 const ResourceSchema = new Schema({
-  TypeofResource: {
+  typeOfResource: {
     type: String,
     required: true
   },
-  Resourcesubtype: {
+  subtype: {
     type: String,
     required: true
   },
@@ -26,7 +26,7 @@ const ResourceSchema = new Schema({
     type: String,
     required: true
   },
-  zipcode: {
+  zip: {
     type: Number,
     required: true
   },
@@ -34,13 +34,17 @@ const ResourceSchema = new Schema({
     type: String,
     required: true
   },
-  resourceMobileNumber: {
+  contactnumber: {
     type: Number,
     required: true
   },
-  resourceEmail: {
+  email: {
     type: String,
     required: true
+  },
+  status: {
+    type: String,
+    default: "Available"
   }
 });
-module.exports = Resource = mongoose.model("Resources", ResourceSchema);
+module.exports = Resource = mongoose.model("resource", ResourceSchema);

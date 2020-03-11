@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 
 router.use(bodyParser.json());
 
-router.post('/createResource', resourceController.createResource);
+router.post('/createResource/', resourceController.createResource);
+router.get('/getResources/' , resourceController.getResources)
 
 module.exports = router;
 

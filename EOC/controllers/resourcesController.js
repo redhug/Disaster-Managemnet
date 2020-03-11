@@ -1,29 +1,35 @@
 const express = require("express");
-const Resource = require("../model/resource");
-//Changes
+const Resource = require("../model/Resource");
+
+const getResources = (req, res) => {
+    Resource.find({ typeOfResource: req.query.typeOfResource })
+      .then(incidents => res.json(incidents))
+      .catch(err => res.status(400).json('Error: ' + err));
+};
+module.exports.getResources = getResources
+
 const createResource = (req, res) => {
-    Resource.findOne({ ResourceName: req.body.ResourceName }).then(Resource => {
-        if (Resource) {
+    Resource.findOne({ resourceName: req.body.resourceName }).then(resource => {
+       
+        if (resource) {
             return res.status(400).json({ email: "Resource already exists" });
         } else {
             const newResource = new Resource({                
-                TypeofResource: req.body.TypeofResource,
-                Resourcesubtype: req.body.Resourcesubtype,
+                typeOfResource: req.body.typeOfResource,
+                subtype: req.body.subtype,
                 resourceName: req.body.resourceName,
-                location: req.body.location,
                 address: req.body.address,
-                address2: req.body.address2,
                 city: req.body.city,
                 county: req.body.county,
-                zipcode: req.body.zipcode,
+                zip: req.body.zip,
                 state: req.body.state,
-                resourceMobileNumber: req.body.resourceMobileNumber,
-                resourceEmail: req.body.resourceEmail                
+                contactnumber: req.body.contactnumber,
+                email: req.body.email                
             });
             newResource
                 .save()
                 .then(user => res.json(user))
-                .catch(err => console.log(err));
+                .catch(err => res.json(err));
         }
     });
 };

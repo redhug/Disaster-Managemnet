@@ -21,14 +21,14 @@ class Resources extends Component {
 
    renderTableData() {
     return this.state.resources.map((resources, index) => {
-       const { type, name, status,address, contact,email } = resources 
+       const { typeOfResource, resourceName, status,address, contactnumber,email } = resources 
        return (
           <tr >
-             <td>{type}</td>
-             <td>{name}</td>
              <td>{status}</td>
+             <td>{typeOfResource}</td>
+             <td>{resourceName}</td>
              <td>{address}</td>
-             <td>{contact}</td>
+             <td>{contactnumber}</td>
              <td>{email}</td>
           </tr>
        )
@@ -62,7 +62,16 @@ class Resources extends Component {
  renderTableHeader() {
   let header = (this.state.resources.length>0)?Object.keys(this.state.resources[0]):[]
   return header.map((key, index) => {
-     return <th key={index}>{key.toUpperCase()}</th>
+     if(key.toUpperCase()!="CITY" &&  
+        key.toUpperCase()!="COUNTY" &&
+        key.toUpperCase()!="__V" &&
+        key.toUpperCase()!="STATE" &&
+        key.toUpperCase()!="ZIP" &&
+        key.toUpperCase()!="SUBTYPE" &&
+        key.toUpperCase()!="_ID" &&
+        key.toUpperCase()!="STATE"){
+      return <th key={index}>{key.toUpperCase()}</th>
+     }
   })
 }
    render() { 
