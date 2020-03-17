@@ -1,5 +1,5 @@
 const express = require("express");
-const Resource = require("../model/Resource");
+const Resource = require("../model/resource");
 
 const getResources = (req, res) => {
     Resource.find({ typeOfResource: req.query.typeOfResource })
