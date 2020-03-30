@@ -8,6 +8,13 @@ const getResources = (req, res) => {
 };
 module.exports.getResources = getResources
 
+const getAvailableResources = (req, res) => {
+    Resource.find({ status: 'Available' })
+      .then(incidents => res.json(incidents))
+      .catch(err => res.status(400).json('Error: ' + err));
+};
+module.exports.getAvailableResources = getAvailableResources
+
 const createResource = (req, res) => {
     Resource.findOne({ resourceName: req.body.resourceName }).then(resource => {
        

@@ -3,7 +3,7 @@ const router = express.Router();
 // Load User model
 const Incidents = require("../model/Incidents");
 const IncidentAsignee = require("../model/IncidentAsignee");
-
+const Resource = require("../model/resource");
 const getIncidents = (req, res) => {
     Incidents.find({ status: req.query.status })
       .then(incidents => res.json(incidents))
@@ -111,36 +111,45 @@ module.exports.editIncident = editIncident
 
 
 const assignResourceToIncident = (req, res) => {
-
-    var IncidentId = req.body.incidentId;
-    var ResourceList = req.body.resourceList;
-
-    var objectList = []
-
-
-
-    ResourceList.forEach(element => {
-
-        var incidentAsignee = {}
-        incidentAsignee.IncidentId=IncidentId
-        incidentAsignee.AssignedTo=element.asigneeEmail
-        incidentAsignee.Isperson=element.Isperson
-        incidentAsignee.AssignedByEmail=req.user.email
-        objectList.push(incidentAsignee);
-
-        
-    });
-
-
-     // save multiple documents to the collection referenced by Book Model
-     IncidentAsignee.collection.insert(objectList, function (err, docs) {
-        if (err){ 
-            return console.error(err);
-        } else {
-          console.log("Multiple documents inserted to Collection");
+    Incidents.findOneAndUpdate({
+        incidentId:req.body.incidentId
+    }, 
+    {
+        $push:{
+            technicalResources: req.body.resources
         }
-      });
-
+    },
+     (error, incident)=>{
+    if(error){
+        return res.json({code: 400, message:'Something went wrong'})
+    }
+    if(incident){
+        req.body.resources.forEach(element => {
+            Resource.findOneAndUpdate({
+                _id:element
+            }, 
+            {
+                $set:{
+                    status: 'Assigned'
+                }
+            },
+             (error, incident)=>{
+            if(error){
+                return res.json({code: 400, message:'Something went wrong'})
+            }
+            if(incident){
+               console.log('edited')
+            }else{
+                console.log('edited')
+            }})
+            .catch(err => res.status(400).json('Error: ' + err)); 
+        });
+    
+        return res.json({code: 200, message:'Incident edited.'})
+    }else{
+        res.status(400).json('Error: ' + err)
+    }})
+    .catch(err => res.status(400).json('Error: ' + err));
 
 };
 

@@ -2,138 +2,60 @@ import React, { Component } from "react";
 import NavbarApp from "./navbar.component";
 import "../static/css/Resources.css";
 import { Button } from "react-bootstrap";
+import axios from "axios";
 
 export default class assignResource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      resources: [
-        {
-          id: 1,
-          type: "EMS",
-          name: "Mosaic Ambulance",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 2,
-          type: "Fire",
-          name: "Nodway county",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 3,
-          type: "Hazmat",
-          name: "Military ",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 4,
-          type: "EMS",
-          name: "Nodaway",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 5,
-          type: "EMS",
-          name: "Military ",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 6,
-          type: "Fire",
-          name: "Nodaway",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 7,
-          type: "Fire",
-          name: "Mosaic Ambulance",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 8,
-          type: "Person",
-          name: "Nodway county",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 9,
-          type: "Hazmat",
-          name: "Military ",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 10,
-          type: "EMS",
-          name: "Nodaway",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 11,
-          type: "Hazmat",
-          name: "Military ",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        },
-        {
-          id: 12,
-          type: "Fire",
-          name: "Nodaway",
-          status: "Available",
-          address: "Maryville",
-          contact: "123456789",
-          email: "sample@test.com"
-        }
-      ],
-      rtype: "Fire"
+      resources: [],
+      rtype: "Fire",
+      selectedResources: []
     };
+    this.getResourcesList();
     this.handleChange = this.handleChange.bind(this);
+    this.handleChecked = this.handleChecked.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async getResourcesList() {
+    await axios.get('/api/resource/getAvailableResources')
+      .then(response => {
+        this.setState({ resources: response.data })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+  handleChecked(e) {
+    const item = e.target.name;
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      this.setState({
+        selectedResources: this.state.selectedResources.concat(item)
+      })
+    }
+    else {
+      var array = [...this.state.selectedResources];
+      var index = array.indexOf(item)
+      if (index !== -1) {
+        array.splice(index, 1);
+        this.setState({ selectedResources: array });
+      }
+    }
   }
   renderTableData() {
-    return this.state.resources.map((resources, index) => {
-      if (this.state.rtype == resources.type) {
-        const { id, type, name, status, address, contact, email } = resources;
+    return this.state.resources.map((resource, index) => {
+      if (this.state.rtype == resource.typeOfResource) {
+        const { _id, subtype, resourceName, status, address, contactnumber, email } = resource
         return (
-          <tr key={id}>
-            <input type="checkbox"></input>
-            <td>{id}</td>
-            <td>{type}</td>
-            <td>{name}</td>
+          <tr key={_id}>
+            <input type="checkbox" name={_id} checked={this.state.selectedResources.indexOf(_id) > -1} onChange={this.handleChecked} />
             <td>{status}</td>
+            <td>{subtype}</td>
+            <td>{resourceName}</td>
             <td>{address}</td>
-            <td>{contact}</td>
+            <td>{contactnumber}</td>
             <td>{email}</td>
           </tr>
         );
@@ -150,35 +72,63 @@ export default class assignResource extends Component {
     });
   }
   renderTableHeader() {
-    let header = Object.keys(this.state.resources[0]);
+    let header = (this.state.resources.length > 0) ? Object.keys(this.state.resources[0]) : []
     return header.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>;
-    });
+      if (key.toUpperCase() != "CITY" &&
+        key.toUpperCase() != "COUNTY" &&
+        key.toUpperCase() != "__V" &&
+        key.toUpperCase() != "STATE" &&
+        key.toUpperCase() != "ZIP" &&
+        key.toUpperCase() != "TYPEOFRESOURCE" &&
+        key.toUpperCase() != "_ID" &&
+        key.toUpperCase() != "STATE") {
+        return <th key={index}>{key.toUpperCase()}</th>
+      }
+    })
+  }
+  handleSubmit() {
+    console.log(this.props.location.state.id)
+    var data = {
+      incidentId: this.props.location.state.id,
+      resources: this.state.selectedResources
+    }
+    axios
+      .post('/api/incident/assignResourceToIncident', data)
+      .then(response => {
+        if (response.status == 200) {
+          console.log(response)
+        } else {
+          console.log(response)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
   render() {
     return (
       <div>
         <NavbarApp />
-        <div style={{ margin: "1%" }}>
-          <h2 style={{ textAlign: "left", marginBottom: "3%" }}>
-            Assign Resource
-          </h2>
-          <div className="float-right">
-            <select
-              name="rtype"
-              className="browser-default custom-select"
-              value={this.state.rtype}
-              placeholder="Select status"
-              onChange={this.handleChange}
-            >
-              <option value="EMS">EMS</option>
-              <option value="Fire">Fire</option>
-              <option value="Hazmat">Hazmat</option>
-              <option value="Utilities">Utilities</option>
-              <option value="Person">Person</option>
-            </select>
+        <div className="container">
+          <div className="mt20">
+            <h3 className="float-left">Assign Resources</h3>
+            <div className="float-right mb10">
+              <select
+                name="rtype"
+                className="browser-default custom-select"
+                value={this.state.rtype}
+                placeholder="Select status"
+                onChange={this.handleChange}
+              >
+                <option value="EMS">EMS</option>
+                <option value="Fire">Fire</option>
+                <option value="Hazmat">Hazmat</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Person">Person</option>
+              </select>
+            </div>
           </div>
-          <div class="table-wrapper-scroll-y my-custom-scrollbar">
+          <div className="table-wrapper-scroll-y clearfix">
             <table id="resources">
               <tbody>
                 <tr>
@@ -189,7 +139,7 @@ export default class assignResource extends Component {
               </tbody>
             </table>
           </div>
-          <Button style={{ margin: "5%", width: "10%" }}>Assign</Button>
+          <Button className="mt20" onClick={this.handleSubmit}>Assign</Button>
         </div>
       </div>
     );

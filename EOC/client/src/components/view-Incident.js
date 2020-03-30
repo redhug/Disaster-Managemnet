@@ -78,7 +78,9 @@ export default class viewIncident extends Component {
                                                 state:this.state})}>
                         Edit incident
                     </Button>
-                    <Button type="submit" name="Assign" className="ml2" >
+                    <Button type="submit" name="Assign" className="ml2" onClick={()=>this.props.history.push(
+                                                {pathname: '/assignResource',
+                                                state: { id: this.state.incidentId,name: this.state.incidentName }})}>
                         Assign
                     </Button></span>: <div></div>}
                     <Button type="submit" className="ml2" name="viewReports" 
