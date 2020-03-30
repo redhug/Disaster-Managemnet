@@ -11,7 +11,6 @@ const getReports = (req, res) => {
 };
 module.exports.getReports = getReports
 
-
 const createReport = (req, res) => {
     //console.log(req)
     Reports.findOne({ reportTitle: req.body.title }).then(report => {
@@ -28,6 +27,7 @@ const createReport = (req, res) => {
             const newReport = new Reports({
                 incidentId: req.body.incidentId,
                 title: req.body.title,
+                status:'open',
                 dateAndTime: req.body.timeDate,
                 address: req.body.location,
                 description: req.body.description,
@@ -55,7 +55,7 @@ module.exports.createReport = createReport
 const closeReport = (req, res) => {
     console.log(req.body.params)
     Reports.findOneAndUpdate({
-        reportId:req.body.params.reportId
+        _id:req.body.params.reportId
     }, 
     {
         $set:{

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import NavbarApp from "./navbar.component";
 import moment from "moment";
+import axios from "axios";
+import { store } from 'react-notifications-component';
 
 export default class ViewReport extends Component {
     constructor(props) {
@@ -24,6 +26,7 @@ export default class ViewReport extends Component {
             notes: "A bus collided with a Truck leading 15 deaths"
 
         };
+        this.closeIncident = this.closeIncident.bind(this);
        // this.routeChange = this.routeChange.bind(this);
     }
      renderDate(){
@@ -34,7 +37,39 @@ export default class ViewReport extends Component {
             </span>
         )
      }
-    
+     closeIncident(){
+        console.log(this.props.location.state.report._id)
+        axios
+                .post('/api/report/closeReport',
+                {
+                    params: {
+                        reportId: this.props.location.state.report._id
+                    }
+                })
+                .then(response =>{
+                    if(response.status == 200){
+                        store.addNotification({
+                            title: "Report closed!",
+                            message: "The Report is closed!!!",
+                            type: "info",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animated", "fadeIn"],
+                            animationOut: ["animated", "fadeOut"],
+                            width: 300,
+                            dismiss: {
+                              duration: 5000,
+                              onScreen: true
+                            }
+                          });
+                    }else{
+                        console.log(response)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+            })
+    }
     
     render() {
         return (
@@ -117,6 +152,11 @@ export default class ViewReport extends Component {
                     <h5>Notes:</h5>
                     <p>{this.props.location.state.report.notes}</p>
                 </div>
+                <Button name={this.state.buttonName}
+                bssize="large" onClick={e =>
+                    window.confirm("Are you sure you wish to archive this item?") &&
+                    this.closeIncident(e)
+                }>Close report</Button>
                 {/* <div className="text-center">
                     <Button name="edit" onClick={()=>this.props.history.push(
                                                 {pathname: '/createIncident',

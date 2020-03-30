@@ -16,6 +16,10 @@ const ReportSchema = new Schema({
     type: String,
     required: true
   },
+  status:{
+    type: String,
+    required:true
+  },
   dateAndTime: {
     type: Date,
     required: true
