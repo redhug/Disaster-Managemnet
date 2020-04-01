@@ -73,7 +73,7 @@ onSubmit = e =>{
         <h2 align="center">Create Resource</h2>   
       <form onSubmit={this.onSubmit}>        
       <div class="inputBox width70">
-        <label for="typeOfResource">Type of Resource</label>
+        <label for="typeOfResource">Type of Resource*</label>
            <select name="typeOfResource" value={this.state.typeOfResource} 
                                     onChange={this.handleChange}
                                     placeholder="Select resource type">  
@@ -86,7 +86,7 @@ onSubmit = e =>{
             </select>
       </div> 
       <div class="inputBox width70">
-        <label for="subtype">Sub-type</label>
+        <label for="subtype">Sub-type*</label>
         <input type="text"
                 
                  name="subtype"
@@ -97,7 +97,7 @@ onSubmit = e =>{
             />
       </div>
       <div class="inputBox width70 ">
-          <label for="resourceName">Resource Name</label>
+          <label for="resourceName">Resource Name*</label>
           <input type="text"                
                  name="resourceName"
                  placeholder="Resource name"
@@ -106,7 +106,7 @@ onSubmit = e =>{
             />
           </div>
             <div class="inputBox width70 ">
-          <label for="contactnumber">Contact Number</label>
+          <label for="contactnumber">Contact Number*</label>
           <input type="number"
                 class="contactnoInput"
                  name="contactnumber"
@@ -117,7 +117,7 @@ onSubmit = e =>{
             />
         </div> 
         <div class="inputBox width70 ">
-          <label for="email">Email-id</label>
+          <label for="email">Email-id*</label>
           <input type="text"
                 
                  name="email"
@@ -128,7 +128,7 @@ onSubmit = e =>{
             />
           </div>  
         <div class="inputBox width70">
-        <label for="address">Address</label>
+        <label for="address">Address*</label>
         <input type="text"
                
                name="address"
@@ -139,7 +139,7 @@ onSubmit = e =>{
         />
         </div>
       <div class="inputBox">
-        <label for="city">City</label>
+        <label for="city">City*</label>
           <input type="text"
              
                  name="city"
@@ -150,7 +150,7 @@ onSubmit = e =>{
           />
       </div> 
       <div class="inputBox col-md-6">
-        <label for="county">County</label>
+        <label for="county">County*</label>
           <input type="text"
                 
                  name ="county"
@@ -160,7 +160,7 @@ onSubmit = e =>{
           />
       </div>
         <div class="inputBox">
-          <label for="zip">Zip code</label>
+          <label for="zip">Zip code*</label>
             <input type ="text"
                  
                    name="zip"
@@ -170,7 +170,7 @@ onSubmit = e =>{
             />
         </div>
         <div class="inputBox col-md-6">
-          <label for="state">State</label>
+          <label for="state">State*</label>
           <input type="text"                 
                  name="state" 
                  placeholder="State"
