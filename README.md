@@ -5,7 +5,7 @@ There exist systems to manage emergency or disaster situations. However, these s
 
 ## Web Application url:
 
-https://www.eoc-dm.herokuapp.com
+https://eoc-dm.herokuapp.com/
 
 Please refer to the user manual for learning more about the web application.
 
