@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// Create Schema
+// Create Resource Schema
 const ResourceSchema = new Schema({
   typeOfResource: {
     type: String,

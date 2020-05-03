@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 autoIncrement = require('mongoose-auto-increment');
-// Create Schema
+// Create Incident Schema
 const IncidentsSchema = new Schema({
   incidentId:{
     type: Number, 

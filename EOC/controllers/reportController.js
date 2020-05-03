@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 // Load User model
 const Reports = require("../model/Report");
-
+// Getting the reports based on specified incident id
 const getReports = (req, res) => {
     console.log(req.query)
     Reports.find({ incidentId: req.query.incidentId })
@@ -10,7 +10,7 @@ const getReports = (req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
 };
 module.exports.getReports = getReports
-
+// Creating a new report
 const createReport = (req, res) => {
     //console.log(req)
     Reports.findOne({ reportTitle: req.body.title }).then(report => {

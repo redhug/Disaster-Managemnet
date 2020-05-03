@@ -1,3 +1,4 @@
+// routes for indicent module
 var express = require('express');
 var router = express.Router();
 var incidentController = require('../controllers/incidentController')

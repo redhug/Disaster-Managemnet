@@ -1,20 +1,20 @@
 const express = require("express");
 const Resource = require("../model/resource");
-
+// Getting the resource of requested type.
 const getResources = (req, res) => {
     Resource.find({ typeOfResource: req.query.typeOfResource })
       .then(incidents => res.json(incidents))
       .catch(err => res.status(400).json('Error: ' + err));
 };
 module.exports.getResources = getResources
-
+// Getting the available resources.
 const getAvailableResources = (req, res) => {
     Resource.find({ status: 'Available' })
       .then(incidents => res.json(incidents))
       .catch(err => res.status(400).json('Error: ' + err));
 };
 module.exports.getAvailableResources = getAvailableResources
-
+// validating and creating a new resource.
 const createResource = (req, res) => {
     Resource.findOne({ resourceName: req.body.resourceName }).then(resource => {
        
