@@ -101,7 +101,11 @@ export default class submitReport extends Component {
             <div>
                 <NavbarApp />
                 <div className="signup form-wrapper">
+                <div className="card bg-light mb-3 m20">
+                    <div className="card-header m20">
                     <h2>Create Report</h2>
+                    </div>
+                    <div className="card-body">
                     <form onSubmit={this.handleSubmit}>
                         <div className="inputBox width70">
                             <label htmlFor="title">Title of Report:</label>
@@ -254,6 +258,8 @@ export default class submitReport extends Component {
                             Submit Report
                         </Button></div>
                     </form>
+                    </div>
+                    </div>
                 </div>
             </div>
         );

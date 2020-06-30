@@ -161,11 +161,11 @@ export default class CreateIncident extends Component {
 
         if(this.state.buttonName != 'Create incident'){
             return(
-                <div  className="ml2 mt20"><Button name={this.state.buttonName}
+                <span  className="ml2 mt20"><Button name={this.state.buttonName}
                 bssize="large" onClick={e =>
                     window.confirm("Are you sure you wish to archive this item?") &&
                     this.closeIncident(e)
-                }>Close incident</Button></div>
+                }>Close incident</Button></span>
             );
         }
     }
@@ -175,7 +175,11 @@ export default class CreateIncident extends Component {
             <div>
                 <NavbarApp />
                 <div className="signup form-wrapper">
+                    <div className="card bg-light mb-3 m20">
+                    <div className="card-header m20">
                     <h2>{this.state.buttonName}</h2>
+                    </div>
+                    <div className="card-body">
                     <form onSubmit={this.handleSubmit}>
                         <div className="inputBox width70">
                             <label htmlFor="title">Title</label>
@@ -220,13 +224,20 @@ export default class CreateIncident extends Component {
                                 onChange={this.handleChange}
                             />
                         </div>
-                        <div className="mt20">
+                        
+                    </form>
+                    </div>
+                    </div>
+                    <div className="text-center">
+                    <div className="mt20">
+                        <span>
                             <Button name={this.state.buttonName}
                                 bssize="large" type="submit">{this.state.buttonName}</Button>
-                                
-                        </div>
+                                                        
                         {this.renderCloseButton()}
-                    </form>
+                        </span>
+                        </div>
+                       </div> 
                 </div>
             </div>
         );

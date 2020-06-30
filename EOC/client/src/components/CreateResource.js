@@ -70,7 +70,11 @@ onSubmit = e =>{
     <div>
       <NavbarApp />
       <div className="signup form-wrapper">
-        <h2 align="center">Create Resource</h2>   
+      <div className="card bg-light mb-3 m20">
+                    <div className="card-header m20">
+        <h2 align="center">Create Resource</h2> 
+        </div>
+        <div className="card-body">  
       <form onSubmit={this.onSubmit}>        
       <div class="inputBox width70">
         <label for="typeOfResource">Type of Resource*</label>
@@ -183,6 +187,8 @@ onSubmit = e =>{
           </div>
         </div>
       </form>
+      </div>
+      </div>
     </div> 
     </div>
     );

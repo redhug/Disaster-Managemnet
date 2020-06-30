@@ -76,12 +76,13 @@ export default class ViewReport extends Component {
             <div>
             <NavbarApp />
             <div className="container mt20">
-                <div >
-                    <h2>Sample report</h2>
-                    <h5>Title of the Report:</h5>
-                    <span >{this.props.location.state.report.title}</span>
+                
+                <div className="card bg-light mb-3">
+                <div className="card-header">
+                  <h3>{this.props.location.state.report.title}</h3>
                 </div>
-                <div className="mt20">
+                <div className="card-body">
+                <div className="">
                     <h5>Report Date and Time:</h5>
                     {this.renderDate()}
                 </div>
@@ -151,6 +152,8 @@ export default class ViewReport extends Component {
                 <div className="mt20">
                     <h5>Notes:</h5>
                     <p>{this.props.location.state.report.notes}</p>
+                </div>
+                </div>
                 </div>
                 <Button name={this.state.buttonName}
                 bssize="large" onClick={e =>

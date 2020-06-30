@@ -57,8 +57,12 @@ export default class viewIncident extends Component {
         if (this.state.incidentName) {
           return (
             <div className="container mt20">
-                <div className="timeofIncident">
+                <div className="card bg-light mb-3">
+                <div className="card-header">
                     <h2>{this.state.incidentName}</h2>
+                </div>
+                <div className="card-body">
+                <div>
                     <h5>Time of Incident:</h5>
                     <span >{this.state.timeofIncident}</span>
                 </div>
@@ -69,6 +73,8 @@ export default class viewIncident extends Component {
                 <div className="Description mt20">
                     <h5>Description:</h5>
                     <p>{this.state.description}</p>
+                </div>
+                </div>
                 </div>
                 <div className="text-center">
                    {(this.state.status != 'closed') ?

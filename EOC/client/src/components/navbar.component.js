@@ -31,7 +31,7 @@ class NavbarApp extends Component {
                {store.getState().auth.isAdmin &&
                  <Link to="/pendingRequests" className="nav-link">Manage Users</Link>
                }
-               <Link to="/incidentsList" className="nav-link">Tutorial</Link>
+              
                <Link to="/profile" className="nav-link">Profile</Link>
                <Link to="" onClick={this.onLogoutClick} className="nav-link">Log out</Link>
            </Nav>

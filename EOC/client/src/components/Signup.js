@@ -91,7 +91,11 @@ class Signup extends Component {
       <div>
         <NavBarLogin />
         <div className="signup form-wrapper">
+        <div className="card bg-light mb-3 m20">
+                    <div className="card-header m20">
           <h2>Create Account</h2>
+          </div>
+          <div className="card-body">
           <form onSubmit={this.handleSubmit}>
             <div className="inputBox width50">
               <label htmlFor="firstName">First Name</label>
@@ -229,14 +233,16 @@ class Signup extends Component {
               </div>
              
             </div>
-            <div className="createAccount mt20">
+          </form>
+          </div>
+          </div>
+          <div className="createAccount">
               <Button 
                 bssize="large" type="submit">Create Account</Button>
               <Link to="/login" variant="body2">
                       Already have an account?
               </Link>
             </div>
-          </form>
         </div>
       </div>
     );

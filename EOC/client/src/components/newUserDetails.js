@@ -36,7 +36,8 @@ export default class NewUserDetails extends Component {
           message = "User added !!!";
           this.props.history.push("/pendingRequests");
         } else {
-          message = response.data.message;
+          this.props.history.push("/pendingRequests");
+          message = "User added !!!";
         }
       })
       .catch(error => {

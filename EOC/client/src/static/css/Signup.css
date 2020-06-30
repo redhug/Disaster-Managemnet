@@ -6,14 +6,18 @@
         width: 100% !important;   
 }
 
-
+.bg-light{
+    background: #e3efe1 !important;
+}
 
 .signup form {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
     max-width: 500px;
+}
+.signup .card {
+    flex-direction: row !important;
 }
 .center-align{
     align-items: center;
@@ -116,13 +120,16 @@ aside{
 .m30{
     margin:30%;
 }
+.m20{
+    margin:20px;
+}
 .border-left{
     border-left: ridge !important;
 }
 
 .alert-secondary {
     color: #383d41;
-    background-color: #dfe9cc;
+    background-color: #e3efe1;
     border: groove;
     padding: 1%;
     border-radius: 10px;
