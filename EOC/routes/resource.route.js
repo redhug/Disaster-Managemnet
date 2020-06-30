@@ -1,3 +1,4 @@
+// routes for resource module
 var express = require('express');
 var router = express.Router();
 var resourceController = require('../controllers/resourcesController')

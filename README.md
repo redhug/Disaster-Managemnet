@@ -9,3 +9,4 @@ https://eoc-dm.herokuapp.com/
 
 Please refer to the user manual for learning more about the web application.
 
+[User Manual](https://github.com/redhug/Disaster-Managemnet/blob/master/Documentation/EmergencyOperationCenter_01_UIM_final_version-1.doc)
