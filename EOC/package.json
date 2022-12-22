@@ -34,7 +34,7 @@
     "express-session": "^1.17.0",
     "handlebars": "^4.4.4",
     "is-empty": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.7.5",
     "mongoose-auto-increment": "^5.0.1",
     "nodemailer": "^6.3.1",
